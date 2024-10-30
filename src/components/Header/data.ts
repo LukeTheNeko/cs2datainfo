@@ -108,7 +108,7 @@ export const midTier = [
     },
     {
         name: "Sawed-Off",
-        image: "/img/weapons/50px/sawed-Off.webp",
+        image: "/img/weapons/50px/sawed-off.webp",
         link: "/weapons/sawed-off",
     },
     {

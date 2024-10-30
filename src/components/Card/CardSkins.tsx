@@ -4,7 +4,6 @@ import Link from "next/link";
 interface CardProps {
     skinName: string;
     rarity?: {
-        // Tornando a propriedade rarity opcional
         name?: string; // Tornando a propriedade name opcional
         color?: string; // Tornando a propriedade color opcional
     };

@@ -17,7 +17,7 @@ const socialLinks: SocialLink[] = [
     },
     {
         Icon: FaYoutube,
-        url: "https://www.youtube.com/channel/UCGeV5qjECCnZqccDAMf--wA",
+        url: "https://www.youtube.com/@cs2datainfo",
     },
     {
         Icon: FaTiktok,
