@@ -28,7 +28,18 @@ export default function CardSkins(props: CardProps) {
         props.skinName
             .toLowerCase()
             .trim()
-            .replace(/[^a-z0-9]+/g, "-"),
+            .replace(/\|/g, "") // Remove "|"
+            .replace(/CS:GO/g, "") // Remove "CS:GO"
+            .replace(/StatTrak™/g, "") // Remove "StatTrak™"
+            .replace(/\(Holo\/Foil\)/g, "") // Remove "(Holo/Foil)"
+            .replace(/\(Foil\)/g, "") // Remove "(Foil)"
+            .replace(/★/g, "") // Remove a estrela "★"
+            .replace(/\s* & \s*/g, "-") // Substitui "&" e espaços ao redor por "-"
+            .replace(/\s+/g, "-") // Substitui espaços por "-"
+            .replace(/-+/g, "-") // Remove hífens duplicados
+            .toLowerCase() // Converte para minúsculas
+            .replace(/^-+/g, "") // Remove hífens no início
+            .replace(/-+$/g, ""), // Remove hífens no final
     );
 
     const textSizeTitleClass =
@@ -111,15 +122,17 @@ export default function CardSkins(props: CardProps) {
                         props.collectionName
                             .replace(/\|/g, "") // Remove "|"
                             .replace(/CS:GO/g, "") // Remove "CS:GO"
-                            .replace(/StatTrak™/g, "") // Remove "stattrak™"
-                            .replace(/\(Holo\/Foil\)/g, "") // Remove "(Holo/Foil)
-                            .replace(/\(Foil\)/g, "") // Remove "(Holo/Foil)
+                            .replace(/StatTrak™/g, "") // Remove "StatTrak™"
+                            .replace(/\(Holo\/Foil\)/g, "") // Remove "(Holo/Foil)"
+                            .replace(/\(Foil\)/g, "") // Remove "(Foil)"
+                            .replace(/★/g, "") // Remove a estrela "★"
                             .replace(/\s* & \s*/g, "-") // Substitui "&" e espaços ao redor por "-"
                             .replace(/\s+/g, "-") // Substitui espaços por "-"
                             .replace(/-+/g, "-") // Remove hífens duplicados
                             .toLowerCase() // Converte para minúsculas
-                            .replace(/^-+|-+$/g, ""), // Remove hífens no início ou no fim
-                    )}`}
+                            .replace(/^-+/g, "") // Remove hífens no início
+                            .replace(/-+$/g, ""), // Remove hífens no final
+                    )}`.replace(/^-+/, "")} // Garante que não comece com hífen
                     className={`collection-link ${textSizeCollectionClass}`}
                 >
                     {props.collectionName}

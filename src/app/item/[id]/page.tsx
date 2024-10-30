@@ -3,6 +3,8 @@ import { Slider } from "./slider";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import axios from "axios";
+import { notFound } from "next/navigation";
+import { useRouter } from "next/router";
 
 interface Skin {
     id: string;
@@ -55,28 +57,49 @@ interface Skin {
     image: string;
 }
 
-async function fetchSkinData(): Promise<Skin | null> {
-    try {
-        const response = await axios.get(
-            "https://api.cs2data.info/en/skins.json",
-        );
-        return (
-            response.data.find(
-                (item: Skin) => item.name === "AK-47 | Redline",
-            ) || null
-        );
-    } catch (error) {
-        console.error("Erro ao buscar dados da skin:", error);
-        return null;
+export default async function Item({ params }: { params: { id: string } }) {
+    // Função para formatar o nome da skin
+    function formatSkinName(name: string): string {
+        return name
+            .replace(/\|/g, "") // Remove "|"
+            .replace(/CS:GO/g, "") // Remove "CS:GO"
+            .replace(/StatTrak™/g, "") // Remove "StatTrak™"
+            .replace(/\(Holo\/Foil\)/g, "") // Remove "(Holo/Foil)"
+            .replace(/\(Foil\)/g, "") // Remove "(Foil)"
+            .replace(/★/g, "") // Remove a estrela "★"
+            .replace(/\s* & \s*/g, "-") // Substitui "&" e espaços ao redor por "-"
+            .replace(/\s+/g, "-") // Substitui espaços por "-"
+            .replace(/-+/g, "-") // Remove hífens duplicados
+            .toLowerCase() // Converte para minúsculas
+            .replace(/^-+/g, "") // Remove hífens no início
+            .replace(/-+$/g, ""); // Remove hífens no final
     }
-}
 
-export default async function Item() {
-    const skin = await fetchSkinData();
+    async function fetchSkinData(): Promise<Skin[] | null> {
+        try {
+            const response = await axios.get(
+                "https://api.cs2data.info/en/skins.json",
+            );
+            return response.data || null;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    const skins = await fetchSkinData();
+
+    if (!skins) {
+        return notFound(); // Retorna um 404 caso as skins não sejam encontradas
+    }
+
+    // Tenta encontrar a skin correspondente ao ID da URL
+    const skin = skins.find((item) => formatSkinName(item.name) === params.id);
 
     if (!skin) {
-        return <div>Skin não encontrada.</div>;
+        return notFound(); // Retorna um 404 se a skin não for encontrada
     }
+
+    /*  */
 
     const processDescription = (description: string) => {
         const flavorTextRegex = /<i>(.*?)<\/i>/;
@@ -185,8 +208,8 @@ export default async function Item() {
                                 <Image
                                     key={crate.id}
                                     alt={crate.name}
-                                    height={70}
-                                    width={70}
+                                    height={80}
+                                    width={80}
                                     src={crate.image}
                                     className="pr-2 pl-2"
                                     priority
@@ -196,8 +219,8 @@ export default async function Item() {
                                 <Image
                                     key={collection.id}
                                     alt={collection.name}
-                                    height={70}
-                                    width={70}
+                                    height={80}
+                                    width={80}
                                     priority
                                     className="pr-2 pl-2"
                                     src={collection.image}

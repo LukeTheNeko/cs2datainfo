@@ -11,8 +11,8 @@ interface SliderProps {
 export function Slider({ initialValue, maxThumbValue }: SliderProps) {
     const [value, setValue] = useState(initialValue);
 
-    const min = 0.00;
-    const max = 1.00;
+    const min = 0.0;
+    const max = 1.0;
 
     const rangeRef = useRef<HTMLInputElement>(null);
     const [tooltipPosition, setTooltipPosition] = useState("0px");
@@ -56,27 +56,36 @@ export function Slider({ initialValue, maxThumbValue }: SliderProps) {
 
     const getColorStyle = () => {
         const colorRanges = [
-            { color: "bg-green-500 rounded-l", end: 0.07 },
+            { color: "bg-green-500", end: 0.07 },
             { color: "bg-lime-500", end: 0.15 },
             { color: "bg-yellow-500", end: 0.38 },
             { color: "bg-orange-500", end: 0.45 },
-            { color: "bg-red-500 rounded-r", end: 1.0 },
+            { color: "bg-red-500", end: 1.0 },
         ];
 
         let accumulatedWidth = 0;
         const colorStyles: React.ReactNode[] = [];
 
-        colorRanges.forEach(({ color, end }) => {
+        colorRanges.forEach(({ color, end }, index) => {
             const start = Math.max(accumulatedWidth, initialValue);
             const width = Math.min(end, maxThumbValue) - start;
-
             accumulatedWidth = end;
 
             if (width > 0) {
+                // Verifica se `initialValue` está neste intervalo para `rounded-l`
+                const isStart =
+                    initialValue >= accumulatedWidth - width &&
+                    initialValue <= end;
+
+                // Verifica se `maxThumbValue` está neste intervalo para `rounded-r`
+                const isEnd = maxThumbValue > start && maxThumbValue <= end;
+
                 colorStyles.push(
                     <div
                         key={color}
-                        className={`absolute top-0 bottom-0 ${color}`}
+                        className={`absolute top-0 bottom-0 ${color} ${
+                            isStart ? "rounded-l" : ""
+                        } ${isEnd ? "rounded-r" : ""}`}
                         style={{
                             width: `${(width / max) * 100}%`,
                             left: `${(start / max) * 100}%`,
