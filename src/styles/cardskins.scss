@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*  SKINS CARDS  */
+.skin-card {
+    @apply text-white w-[370px] h-[475px] shadow-lg text-center justify-center items-center bg-black-300 rounded-xl;
+  
+    .header {
+      @apply m-2;
+  
+      @layer components {
+        .text-base-custom {
+          @apply text-[20px] font-medium;
+        }
+        .text-small {
+          @apply text-[20px] font-medium;
+        }
+      }
+  
+      .rarity-info {
+        @apply text-sm text-zinc-950 font-normal mt-2 px-4;
+  
+        .rarity-badge {
+          @apply rounded-lg;
+        }
+  
+        .special-option {
+          @apply h-5 mt-1 rounded-lg;
+        }
+      }
+    }
+  
+    .image-container {
+      @apply flex flex-col justify-center items-center my-2 p-2 h-[269.5px] w-[370px];
+  
+      .image-wrapper {
+        @apply flex justify-center items-center text-center;
+  
+        img {
+          @apply pr-2 pl-2 w-full h-full;
+        }
+      }
+    }
+  
+    .price-info {
+      @apply text-base flex flex-col m-2;
+  
+      .price-without-stattrak {
+        @apply text-white;
+      }
+  
+      .price-with-stattrak {
+        @apply text-[#cf6a32];
+      }
+    }
+  
+    .collection-info {
+      @apply flex justify-center items-center text-center text-sm;
+  
+      .collection-image {
+        @apply flex justify-center items-center;
+  
+        img {
+          @apply pr-2 pl-2 w-full relative;
+        }
+      }
+  
+      .collection-link {
+        @apply hover:underline font-light text-zinc-400;
+      }
+    }
+  }
+  /*  SKINS CARDS  */
+
+  /* WEAPON TITLE */
+.crate-container {
+    @apply flex flex-col md:flex-row justify-center text-center items-center my-16 text-white font-medium mx-20;
+  
+    .crate-image-wrapper {
+      @apply md:pr-4 md:pl-2;
+  
+      .crate-image {
+        @apply pr-4 pl-2 w-[150px] md:w-full h-auto;
+      }
+    }
+  
+    .crate-info {
+      @apply text-2xl md:text-4xl mt-4 md:mt-0 flex-col flex;
+  
+      .crate-name {
+        @apply text-2xl md:text-4xl;
+      }
+  
+      .crate-sale-date {
+        @apply text-xs text-center;
+      }
+    }
+  }
+  /* WEAPON TITLE */
