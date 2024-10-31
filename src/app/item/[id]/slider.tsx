@@ -66,7 +66,7 @@ export function Slider({ initialValue, maxThumbValue }: SliderProps) {
         let accumulatedWidth = 0;
         const colorStyles: React.ReactNode[] = [];
 
-        colorRanges.forEach(({ color, end }, index) => {
+        colorRanges.forEach(({ color, end }) => {
             const start = Math.max(accumulatedWidth, initialValue);
             const width = Math.min(end, maxThumbValue) - start;
             accumulatedWidth = end;

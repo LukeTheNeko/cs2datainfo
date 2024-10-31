@@ -80,7 +80,7 @@ export default async function Item({ params }: { params: { id: string } }) {
                 "https://api.cs2data.info/en/skins.json",
             );
             return response.data || null;
-        } catch (error) {
+        } catch (_) {
             return null;
         }
     }
@@ -214,7 +214,7 @@ export default async function Item({ params }: { params: { id: string } }) {
                                     priority
                                 />
                             ))}
-                            {skin.collections.map((collection) => (
+                            {skin.collections?.map((collection) => (
                                 <Image
                                     key={collection.id}
                                     alt={collection.name}
@@ -333,93 +333,116 @@ export default async function Item({ params }: { params: { id: string } }) {
                         </div>
 
                         <div className="w-[410px] p-5 bg-black-300 rounded-md">
-                            <div className="flex relative mt-2 mb-2 mx-4">
-                                <div
-                                    className="absolute top-0"
-                                    style={{
-                                        left: `${calcs(skin.max_float, true)}%`,
-                                    }}
-                                >
-                                    <span
-                                        className="text-xs absolute"
-                                        style={{
-                                            marginTop: "-20px",
-                                            marginLeft: "-10px",
-                                        }}
-                                    >
-                                        {Number(skin.max_float || 0).toFixed(2)}
-                                    </span>
-                                    <svg
-                                        className="absolute w-1.5 h-1.5"
-                                        style={{
-                                            marginTop: "-5px",
-                                            marginLeft: "-2px",
-                                        }}
-                                        fill="currentColor"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 12 7"
-                                    >
-                                        <path d="M11.261 2.02A.96.96 0 009.941.623L6 4.35 2.06.623A.96.96 0 00.74 2.02l4.573 4.33a1 1 0 001.374 0l4.574-4.33z"></path>
-                                    </svg>
+                            {(skin.min_float !== null ||
+                                skin.max_float !== null) && (
+                                <div className="flex relative mt-2 mb-2 mx-4">
+                                    {skin.max_float !== null && (
+                                        <div
+                                            className="absolute top-0"
+                                            style={{
+                                                left: `${calcs(
+                                                    skin.max_float,
+                                                    true,
+                                                )}%`,
+                                            }}
+                                        >
+                                            <span
+                                                className="text-xs absolute"
+                                                style={{
+                                                    marginTop: "-20px",
+                                                    marginLeft: "-10px",
+                                                }}
+                                            >
+                                                {Number(
+                                                    skin.max_float || 0,
+                                                ).toFixed(2)}
+                                            </span>
+                                            <svg
+                                                className="absolute w-1.5 h-1.5"
+                                                style={{
+                                                    marginTop: "-5px",
+                                                    marginLeft: "-2px",
+                                                }}
+                                                fill="currentColor"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 12 7"
+                                            >
+                                                <path d="M11.261 2.02A.96.96 0 009.941.623L6 4.35 2.06.623A.96.96 0 00.74 2.02l4.573 4.33a1 1 0 001.374 0l4.574-4.33z"></path>
+                                            </svg>
+                                        </div>
+                                    )}
+                                    {skin.min_float !== null && (
+                                        <div
+                                            className="absolute top-0"
+                                            style={{
+                                                left: `${calcs(
+                                                    skin.min_float,
+                                                    true,
+                                                )}%`,
+                                            }}
+                                        >
+                                            <span
+                                                className="text-xs absolute"
+                                                style={{
+                                                    marginTop: "-20px",
+                                                    marginLeft: "-10px",
+                                                }}
+                                            >
+                                                {Number(
+                                                    skin.min_float || 0,
+                                                ).toFixed(2)}
+                                            </span>
+                                            <svg
+                                                className="absolute w-1.5 h-1.5"
+                                                style={{
+                                                    marginTop: "-5px",
+                                                    marginLeft: "-2px",
+                                                }}
+                                                fill="currentColor"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 12 7"
+                                            >
+                                                <path d="M11.261 2.02A.96.96 0 009.941.623L6 4.35 2.06.623A.96.96 0 00.74 2.02l4.573 4.33a1 1 0 001.374 0l4.574-4.33z"></path>
+                                            </svg>
+                                        </div>
+                                    )}
+                                    <div className="absolute top-0 left-0 right-0 h-[3px] bg-red-600"></div>
+                                    {skin.min_float !== null &&
+                                        skin.max_float !== null && (
+                                            <div
+                                                className="absolute z-10 top-0 h-[3px] bg-green-600"
+                                                style={{
+                                                    left: `${calcs(
+                                                        skin.min_float,
+                                                        true,
+                                                    )}%`,
+                                                    right: `${calcs(
+                                                        skin.max_float,
+                                                        false,
+                                                    )}%`,
+                                                }}
+                                            ></div>
+                                        )}
+                                    <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r rounded-bl tippy">
+                                        <span className="text-xs">FN</span>
+                                    </div>
+                                    <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
+                                        <span className="text-xs">MW</span>
+                                    </div>
+                                    <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
+                                        <span className="text-xs">FT</span>
+                                    </div>
+                                    <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
+                                        <span className="text-xs">WW</span>
+                                    </div>
+                                    <div className="w-1/5 bg-black-400 text-center shadow-md py-2 rounded-br">
+                                        <span className="text-xs">BS</span>
+                                    </div>
                                 </div>
-                                <div
-                                    className="absolute top-0"
-                                    style={{
-                                        left: `${calcs(skin.min_float, true)}%`,
-                                    }}
-                                >
-                                    <span
-                                        className="text-xs absolute"
-                                        style={{
-                                            marginTop: "-20px",
-                                            marginLeft: "-10px",
-                                        }}
-                                    >
-                                        {Number(skin.min_float || 0).toFixed(2)}
-                                    </span>
-                                    <svg
-                                        className="absolute w-1.5 h-1.5"
-                                        style={{
-                                            marginTop: "-5px",
-                                            marginLeft: "-2px",
-                                        }}
-                                        fill="currentColor"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 12 7"
-                                    >
-                                        <path d="M11.261 2.02A.96.96 0 009.941.623L6 4.35 2.06.623A.96.96 0 00.74 2.02l4.573 4.33a1 1 0 001.374 0l4.574-4.33z"></path>
-                                    </svg>
-                                </div>
-                                <div className="absolute top-0 left-0 right-0 h-[3px] bg-red-600"></div>
-                                <div
-                                    className="absolute z-10 top-0 h-[3px] bg-green-600"
-                                    style={{
-                                        left: `${calcs(skin.min_float, true)}%`,
-                                        right: `${calcs(
-                                            skin.max_float,
-                                            false,
-                                        )}%`,
-                                    }}
-                                ></div>
-                                <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r rounded-bl tippy">
-                                    <span className="text-xs">FN</span>
-                                </div>
-                                <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
-                                    <span className="text-xs">MW</span>
-                                </div>
-                                <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
-                                    <span className="text-xs">FT</span>
-                                </div>
-                                <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
-                                    <span className="text-xs">WW</span>
-                                </div>
-                                <div className="w-1/5 bg-black-400 text-center shadow-md py-2 rounded-br">
-                                    <span className="text-xs">BS</span>
-                                </div>
-                            </div>
+                            )}
 
                             <div className="font-medium">
-                            <div className="flex">
+                                <div className="flex">
                                     <span className="font-extralight text-sm">
                                         <span className="font-medium pr-2 text-base">
                                             Description:
@@ -439,46 +462,56 @@ export default async function Item({ params }: { params: { id: string } }) {
                                         </span>
                                     </div>
                                 )}
-                                <div className="flex">
-                                    <span className="font-extralight text-sm">
-                                        <span className="font-medium pr-2 text-base">
-                                            Category:
+                                {skin.weapon?.name && (
+                                    <div className="flex">
+                                        <span className="font-extralight text-sm">
+                                            <span className="font-medium pr-2 text-base">
+                                                Category:
+                                            </span>
+                                            {skin.weapon.name}
                                         </span>
-                                        {skin.weapon.name}
-                                    </span>
-                                </div>
-                                <div className="flex">
-                                    <span className="font-extralight text-sm">
-                                        <span className="font-medium pr-2 text-base">
-                                            Type:
+                                    </div>
+                                )}
+                                {skin.category?.name && (
+                                    <div className="flex">
+                                        <span className="font-extralight text-sm">
+                                            <span className="font-medium pr-2 text-base">
+                                                Type:
+                                            </span>
+                                            {skin.category.name}
                                         </span>
-                                        {skin.category.name}
-                                    </span>
-                                </div>
-                                <div className="flex">
-                                    <span className="font-extralight text-sm">
-                                        <span className="font-medium pr-2 text-base">
-                                            Finish:
+                                    </div>
+                                )}
+                                {skin.pattern?.name && (
+                                    <div className="flex">
+                                        <span className="font-extralight text-sm">
+                                            <span className="font-medium pr-2 text-base">
+                                                Finish:
+                                            </span>
+                                            {skin.pattern.name}
                                         </span>
-                                        {skin.pattern.name}
-                                    </span>
-                                </div>
-                                <div className="flex">
-                                    <span className="font-extralight text-sm">
-                                        <span className="font-medium pr-2 text-base">
-                                            Finish Style:
+                                    </div>
+                                )}
+                                {skin.finish_style?.name && (
+                                    <div className="flex">
+                                        <span className="font-extralight text-sm">
+                                            <span className="font-medium pr-2 text-base">
+                                                Finish Style:
+                                            </span>
+                                            {skin.finish_style.name}
                                         </span>
-                                        {skin.finish_style.name}
-                                    </span>
-                                </div>
-                                <div className="flex">
-                                    <span className="font-extralight text-sm">
-                                        <span className="font-medium pr-2 text-base">
-                                            Finish Catalog:
+                                    </div>
+                                )}
+                                {skin.paint_index && (
+                                    <div className="flex">
+                                        <span className="font-extralight text-sm">
+                                            <span className="font-medium pr-2 text-base">
+                                                Finish Catalog:
+                                            </span>
+                                            {skin.paint_index}
                                         </span>
-                                        {skin.paint_index}
-                                    </span>
-                                </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
