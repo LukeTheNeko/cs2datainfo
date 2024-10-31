@@ -80,7 +80,7 @@ export default async function Item({ params }: { params: { id: string } }) {
                 "https://api.cs2data.info/en/skins.json",
             );
             return response.data || null;
-        } catch (_) {
+        } catch {
             return null;
         }
     }
