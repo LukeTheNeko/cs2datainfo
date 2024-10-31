@@ -1,10 +1,9 @@
-import Image from "next/image";
-import { Slider } from "./slider";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import axios from "axios";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { useRouter } from "next/router";
+import { Slider } from "./slider";
 
 interface Skin {
     id: string;
@@ -420,6 +419,26 @@ export default async function Item({ params }: { params: { id: string } }) {
                             </div>
 
                             <div className="font-medium">
+                            <div className="flex">
+                                    <span className="font-extralight text-sm">
+                                        <span className="font-medium pr-2 text-base">
+                                            Description:
+                                        </span>
+                                        {cleanedDescription}
+                                    </span>
+                                </div>
+                                {flavorText && (
+                                    <div className="flex">
+                                        <span className="font-extralight text-sm">
+                                            <span className="font-medium pr-2 text-base">
+                                                Flavor Text:
+                                            </span>
+                                            <span className="special-flavor-text">
+                                                {flavorText}
+                                            </span>
+                                        </span>
+                                    </div>
+                                )}
                                 <div className="flex">
                                     <span className="font-extralight text-sm">
                                         <span className="font-medium pr-2 text-base">
@@ -460,26 +479,6 @@ export default async function Item({ params }: { params: { id: string } }) {
                                         {skin.paint_index}
                                     </span>
                                 </div>
-                                <div className="flex">
-                                    <span className="font-extralight text-sm">
-                                        <span className="font-medium pr-2 text-base">
-                                            Description:
-                                        </span>
-                                        {cleanedDescription}
-                                    </span>
-                                </div>
-                                {flavorText && (
-                                    <div className="flex">
-                                        <span className="font-extralight text-sm">
-                                            <span className="font-medium pr-2 text-base">
-                                                Flavor Text:
-                                            </span>
-                                            <span className="special-flavor-text">
-                                                {flavorText}
-                                            </span>
-                                        </span>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>
