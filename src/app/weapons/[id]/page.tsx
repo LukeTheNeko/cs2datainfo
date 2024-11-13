@@ -65,17 +65,23 @@ export default async function Weapons({ params }: { params: { id: string } }) {
         const { data } = await axios.get<Skin[]>(
             "https://api.cs2data.info/en/skins.json",
         );
-        const sortedSkins = data
-            .filter((item) => weaponId === item.weapon.id)
-            .sort(
-                (a, b) =>
-                    rarityOrder.indexOf(a.rarity.name) -
-                    rarityOrder.indexOf(b.rarity.name),
-            );
+
+        // Filtrar e organizar skins, mantendo apenas uma por `skinName`
+        const uniqueSkins = Array.from(
+            new Map(
+                data
+                    .filter((item) => weaponId === item.weapon.id)
+                    .map((item) => [item.name, item])
+            ).values()
+        ).sort(
+            (a, b) =>
+                rarityOrder.indexOf(a.rarity.name) -
+                rarityOrder.indexOf(b.rarity.name),
+        );
 
         const weaponName =
-            sortedSkins.length > 0
-                ? sortedSkins[0].weapon.name
+            uniqueSkins.length > 0
+                ? uniqueSkins[0].weapon.name
                 : "Unknown Weapon";
 
         return (
@@ -86,26 +92,26 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                     <Header />
                     <div className="flex flex-col md:flex-row justify-center items-center my-16 text-white font-medium mx-20">
                         <div className="md:pr-4 md:pl-2">
-                            {sortedSkins.length > 0 && (
+                            {uniqueSkins.length > 0 && (
                                 <Image
                                     width={100}
                                     height={100}
-                                    src={`https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${sortedSkins[0].weapon.id}_png.png`}
-                                    alt={sortedSkins[0].weapon.name}
+                                    src={`https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${uniqueSkins[0].weapon.id}_png.png`}
+                                    alt={uniqueSkins[0].weapon.name}
                                     className="w-full h-auto"
                                     priority
                                 />
                             )}
                         </div>
                         <span className="text-2xl md:text-4xl mt-4 md:mt-0">
-                            {sortedSkins[0].weapon.name} Skins
+                            {uniqueSkins[0].weapon.name} Skins
                         </span>
                     </div>
 
                     <div className="flex justify-center items-center my-10">
                         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 justify-center items-center">
-                            {sortedSkins.length > 0 ? (
-                                sortedSkins.map((item, index) => {
+                            {uniqueSkins.length > 0 ? (
+                                uniqueSkins.map((item, index) => {
                                     const {
                                         name: skinName,
                                         image: imageUrl,

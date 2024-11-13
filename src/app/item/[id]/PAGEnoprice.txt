@@ -246,115 +246,91 @@ export default async function Item({ params }: { params: { id: string } }) {
                                 <span>Well-Worn</span>
                                 <span>$ TO DO</span>
                             </div>
-                            <div className="flex justify-between">
-                                <span>Battle-Scarred</span>
-                                <span>$ TO DO</span>
-                            </div>
+
+                            {skin.stattrak && (
+                                <>
+                                    <hr className="m-2" />
+                                    <div className="flex justify-between">
+                                        <span>
+                                            <span className="text-orange-400 font-medium">
+                                                StatTrak
+                                            </span>{" "}
+                                            Factory New
+                                        </span>
+                                        <span>$ TO DO</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>
+                                            <span className="text-orange-400 font-medium">
+                                                StatTrak
+                                            </span>{" "}
+                                            Minimal Wear
+                                        </span>
+                                        <span>$ TO DO</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>
+                                            <span className="text-orange-400 font-medium">
+                                                StatTrak
+                                            </span>{" "}
+                                            Field-Tested
+                                        </span>
+                                        <span>$ TO DO</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>
+                                            <span className="text-orange-400 font-medium">
+                                                StatTrak
+                                            </span>{" "}
+                                            Well-Worn
+                                        </span>
+                                        <span>$ TO DO</span>
+                                    </div>
+                                </>
+                            )}
+
+                            {skin.souvenir && (
+                                <>
+                                    <hr className="m-2" />
+                                    <div className="flex justify-between">
+                                        <span>
+                                            <span className="text-yellow-400 font-medium">
+                                                Souvenir
+                                            </span>{" "}
+                                            Factory New
+                                        </span>
+                                        <span>$ TO DO</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>
+                                            <span className="text-yellow-400 font-medium">
+                                                Souvenir
+                                            </span>{" "}
+                                            Minimal Wear
+                                        </span>
+                                        <span>$ TO DO</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>
+                                            <span className="text-yellow-400 font-medium">
+                                                Souvenir
+                                            </span>{" "}
+                                            Field-Tested
+                                        </span>
+                                        <span>$ TO DO</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>
+                                            <span className="text-yellow-400 font-medium">
+                                                Souvenir
+                                            </span>{" "}
+                                            Well-Worn
+                                        </span>
+                                        <span>$ TO DO</span>
+                                    </div>
+                                </>
+                            )}
                         </div>
-
-                        {(skin.stattrak || skin.souvenir) && (
-                            <div className="flex flex-col p-5 rounded-md bg-black-300">
-                                {skin.stattrak && (
-                                    <>
-                                        <div className="flex justify-between">
-                                            <span>
-                                                <span className="text-orange-400 font-medium">
-                                                    StatTrak
-                                                </span>{" "}
-                                                Factory New
-                                            </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span>
-                                                <span className="text-orange-400 font-medium">
-                                                    StatTrak
-                                                </span>{" "}
-                                                Minimal Wear
-                                            </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span>
-                                                <span className="text-orange-400 font-medium">
-                                                    StatTrak
-                                                </span>{" "}
-                                                Field-Tested
-                                            </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span>
-                                                <span className="text-orange-400 font-medium">
-                                                    StatTrak
-                                                </span>{" "}
-                                                Well-Worn
-                                            </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span>
-                                                <span className="text-orange-400 font-medium">
-                                                    StatTrak
-                                                </span>{" "}
-                                                Battle-Scarred
-                                            </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                    </>
-                                )}
-
-                                {skin.souvenir && (
-                                    <>
-                                        <div className="flex justify-between">
-                                            <span>
-                                                <span className="text-yellow-400 font-medium">
-                                                    Souvenir
-                                                </span>{" "}
-                                                Factory New
-                                            </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span>
-                                                <span className="text-yellow-400 font-medium">
-                                                    Souvenir
-                                                </span>{" "}
-                                                Minimal Wear
-                                            </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span>
-                                                <span className="text-yellow-400 font-medium">
-                                                    Souvenir
-                                                </span>{" "}
-                                                Field-Tested
-                                            </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span>
-                                                <span className="text-yellow-400 font-medium">
-                                                    Souvenir
-                                                </span>{" "}
-                                                Well-Worn
-                                            </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span>
-                                                <span className="text-yellow-400 font-medium">
-                                                    Souvenir
-                                                </span>{" "}
-                                                Battle-Scarred
-                                            </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        )}
 
                         <div className="w-[410px] p-5 bg-black-300 rounded-md">
                             {(skin.min_float !== null ||
@@ -430,11 +406,11 @@ export default async function Item({ params }: { params: { id: string } }) {
                                             </svg>
                                         </div>
                                     )}
-                                    <div className="absolute top-0 left-0 right-0 h-[3px] z-20 bg-red-600"></div>
+                                    <div className="absolute top-0 left-0 right-0 h-[3px] bg-red-600"></div>
                                     {skin.min_float !== null &&
                                         skin.max_float !== null && (
                                             <div
-                                                className="absolute z-20 top-0 h-[3px] bg-green-600"
+                                                className="absolute z-10 top-0 h-[3px] bg-green-600"
                                                 style={{
                                                     left: `${calcs(
                                                         skin.min_float,
@@ -447,45 +423,20 @@ export default async function Item({ params }: { params: { id: string } }) {
                                                 }}
                                             ></div>
                                         )}
-
-                                    <div className="relative group w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r rounded-bl tippy">
-                                        <span className="text-sm">FN</span>{" "}
-                                        <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-45px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
-                                            Factory New: 0.00 - 0.07
-                                            <div className="tooltip-arrow absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black-400"></div>
-                                        </div>
+                                    <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r rounded-bl tippy">
+                                        <span className="text-xs">FN</span>
                                     </div>
-
-                                    <div className="relative group w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
-                                        <span className="text-sm">MW</span>{" "}
-                                        <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-45px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
-                                            Minimal Wear: 0.07 - 0.15
-                                            <div className="tooltip-arrow absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black-400"></div>
-                                        </div>
+                                    <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
+                                        <span className="text-xs">MW</span>
                                     </div>
-
-                                    <div className="relative group w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
-                                        <span className="text-sm">FT</span>{" "}
-                                        <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-45px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
-                                            Field-Tested: 0.15 - 0.38
-                                            <div className="tooltip-arrow absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black-400"></div>
-                                        </div>
+                                    <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
+                                        <span className="text-xs">FT</span>
                                     </div>
-
-                                    <div className="relative group w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
-                                        <span className="text-sm">WW</span>{" "}
-                                        <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-45px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
-                                            Well-Worn: 0.38 - 0.45
-                                            <div className="tooltip-arrow absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black-400"></div>
-                                        </div>
+                                    <div className="w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
+                                        <span className="text-xs">WW</span>
                                     </div>
-
-                                    <div className="relative group w-1/5 bg-black-400 text-center shadow-md py-2 rounded-br">
-                                        <span className="text-sm">BS</span>{" "}
-                                        <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-45px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
-                                            Battle-Scarred: 0.45 - 1.00
-                                            <div className="tooltip-arrow absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black-400"></div>
-                                        </div>
+                                    <div className="w-1/5 bg-black-400 text-center shadow-md py-2 rounded-br">
+                                        <span className="text-xs">BS</span>
                                     </div>
                                 </div>
                             )}

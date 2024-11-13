@@ -914,6 +914,11 @@ export const stickers = [
         link: "/stickers/regular/collection/elemental-craft-stickers",
     },
     {
+        name: "Ambush Sticker Capsule",
+        image: "/img/containers/50px/crate_sticker_pack_community_2024_capsule_png.webp",
+        link: "/stickers/regular/capsules/ambush-sticker-capsule",
+    },
+    {
         name: "10 Year Birthday Sticker",
         image: "/img/containers/50px/10_year_birthday_sticker.png",
         link: "/stickers/regular/capsules/10-year-birthday-sticker-capsule",

@@ -5,6 +5,10 @@ interface Capsulas {
 
 export const stickersData: Capsulas[] = [
     {
+        id: "ambush-sticker-capsule",
+        capsule_name: "Ambush Sticker Capsule",
+    },
+    {
         id: "10-year-birthday-sticker-capsule",
         capsule_name: "10 Year Birthday Sticker Capsule",
     },

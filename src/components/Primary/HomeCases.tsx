@@ -1,9 +1,10 @@
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import crateIdData from "../../../public/crateId.json";
 import CardRareSpecial from "../Card/CardRareSpecial";
 import CardSkins from "../Card/CardSkins";
-import Link from "next/link";
+import NewItems from "./NewItems";
 
 interface Skin {
     id: string;
@@ -61,6 +62,75 @@ export default async function HomeCases() {
 
     return (
         <>
+            <NewItems
+                items={[
+                    {
+                        src: "https://img.cs2data.info/static/panorama/images/econ/set_icons/set_xpshop_wpn_01_png.png",
+                        name: "Limited Edition Item",
+                        href: "/collection/limited-edition-item",
+                        amountname: "skins",
+                        amount: "1",
+                    },
+                    {
+                        src: "https://img.cs2data.info/static/panorama/images/econ/set_icons/set_graphic_design_png.png",
+                        name: "The Graphic Design Collection",
+                        href: "/collection/the-graphic-design-collection",
+                        amountname: "skins",
+                        amount: "16",
+                    },
+                    {
+                        src: "https://img.cs2data.info/static/panorama/images/econ/set_icons/set_overpass_2024_png.png",
+                        name: "The Overpass 2024 Collection",
+                        href: "/collection/the-overpass-2024-collection",
+                        amountname: "skins",
+                        amount: "16",
+                    },
+                    {
+                        src: "https://img.cs2data.info/static/panorama/images/econ/set_icons/set_realism_camo_png.png",
+                        name: "The Sport & Field Collection",
+                        href: "/collection/the-sport-field-collection",
+                        amountname: "skins",
+                        amount: "16",
+                    },
+
+                    {
+                        src: "/img/others/missing_link_charm_collection.webp",
+                        name: "Missing Link Charms",
+                        href: "/others/charms/missing-link-charm-collection",
+                        amountname: "charms",
+                        amount: "17",
+                    },
+                    {
+                        src: "/img/others/small_arms_charm_collection.webp",
+                        name: "Small Arms Charms",
+                        href: "/others/charms/small-arms-charm-collection",
+                        amountname: "charms",
+                        amount: "16",
+                    },
+                    {
+                        src: "https://img.cs2data.info/static/panorama/images/econ/weapon_cases/crate_community_34_png.png",
+                        name: "Gallery Case Skins",
+                        href: "/cases/gallery-case",
+                        amountname: "skins",
+                        amount: "17",
+                    },
+                    {
+                        src: "/img/collections/elemental_craft_stickers.webp",
+                        name: "Elemental Stickers",
+                        href: "/stickers/regular/collection/elemental-craft-stickers",
+                        amountname: "stickers",
+                        amount: "26",
+                    },
+                    {
+                        src: "/img/collections/character_craft_stickers.webp",
+                        name: "Character Stickers",
+                        href: "/stickers/regular/collection/character-craft-stickers",
+                        amountname: "stickers",
+                        amount: "25",
+                    },
+                ]}
+            />
+
             <div className="crate-container">
                 <div className="crate-image-wrapper">
                     <Image
