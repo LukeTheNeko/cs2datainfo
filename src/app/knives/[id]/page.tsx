@@ -115,7 +115,7 @@ export default async function Knives({ params }: { params: { id: string } }) {
 
                                 return (
                                     <CardSkins
-                                        key={item.id} // Adicionando a chave aqui
+                                        key={item.id}
                                         skinName={skinName}
                                         imageUrl={imageUrl}
                                         rarity={{

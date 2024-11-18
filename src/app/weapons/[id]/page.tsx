@@ -111,7 +111,7 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                     <div className="flex justify-center items-center my-10">
                         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 justify-center items-center">
                             {uniqueSkins.length > 0 ? (
-                                uniqueSkins.map((item, index) => {
+                                uniqueSkins.map((item) => {
                                     const {
                                         name: skinName,
                                         image: imageUrl,
@@ -130,7 +130,7 @@ export default async function Weapons({ params }: { params: { id: string } }) {
 
                                     return (
                                         <CardSkins
-                                            key={index}
+                                            key={item.id}
                                             skinName={skinName}
                                             imageUrl={imageUrl}
                                             rarity={rarity}

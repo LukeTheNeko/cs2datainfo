@@ -37,16 +37,16 @@ const SocialIcon: React.FC<SocialLink> = ({ Icon, url }) => (
 export default function Footer() {
     return (
         <>
-            <div className="bg-gradient-to-b from-black-450 to-black-400 py-8 px-4 md:px-8">
+            <div className="bg-gradient-to-b from-black-450 to-black-400 py-8 px-4 md:px-8 text-white ">
                 <div className="container mx-auto flex flex-col md:flex-row justify-between space-y-8 md:space-y-0 md:space-x-8">
                     <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                        <span className="font-bold text-3xl text-white mb-2">
+                        <span className="font-bold text-3xl mb-2">
                             logo
                             <span className="text-xl font-medium text-indigo-600">
                                 .aqui
                             </span>
                         </span>
-                        <div className="flex mt-2 gap-3 text-white justify-center">
+                        <div className="flex mt-2 gap-3 justify-center">
                             {socialLinks.map(({ Icon, url }, index) => (
                                 <SocialIcon key={index} Icon={Icon} url={url} />
                             ))}
@@ -54,76 +54,110 @@ export default function Footer() {
                     </div>
 
                     <div className="flex flex-col items-center md:items-start">
-                        <div className="text-xl uppercase text-indigo-600 font-bold mb-4">
+                        <div className="text-2xl uppercase text-indigo-600 font-bold mb-4">
                             CS2 Skins
                         </div>
                         <div className="grid grid-cols-2 gap-4 w-full">
                             <div>
-                                <a className="my-2 block text-white" href="/#">
+                                <a
+                                    className="my-2 block hover:underline"
+                                    href="/#"
+                                >
                                     All Agents
                                 </a>
-                                <a className="my-2 block text-white" href="/#">
+                                <a
+                                    className="my-2 block hover:underline"
+                                    href="/#"
+                                >
                                     All Cases
                                 </a>
-                                <a className="my-2 block text-white" href="/#">
+                                <a
+                                    className="my-2 block hover:underline"
+                                    href="/#"
+                                >
                                     All Collections
                                 </a>
-                                <a className="my-2 block text-white" href="/#">
+                                <a
+                                    className="my-2 block hover:underline"
+                                    href="/#"
+                                >
                                     All Gloves
                                 </a>
-                                <a className="my-2 block text-white" href="/#">
+                                <a
+                                    className="my-2 block hover:underline"
+                                    href="/#"
+                                >
                                     All Patches
                                 </a>
                             </div>
                             <div>
-                                <a className="my-2 block text-white" href="/#">
+                                <a
+                                    className="my-2 block hover:underline"
+                                    href="/#"
+                                >
                                     All Pins
                                 </a>
-                                <a className="my-2 block text-white" href="/#">
+                                <a
+                                    className="my-2 block hover:underline"
+                                    href="/#"
+                                >
                                     All Skins
                                 </a>
-                                <a className="my-2 block text-white" href="/#">
+                                <a
+                                    className="my-2 block hover:underline"
+                                    href="/#"
+                                >
                                     All Souvenir Packages
                                 </a>
-                                <a className="my-2 block text-white" href="/#">
+                                <a
+                                    className="my-2 block hover:underline"
+                                    href="/#"
+                                >
                                     All Stickers
                                 </a>
-                                <a className="my-2 block text-white" href="/#">
+                                <a
+                                    className="my-2 block hover:underline"
+                                    href="/#"
+                                >
                                     All Weapons
                                 </a>
                             </div>
                         </div>
                     </div>
 
-                    <div className="w-full md:w-1/4 text-white text-center md:text-left">
-                        <div className="text-xl uppercase text-indigo-600 font-bold mb-4">
+                    <div className="w-full md:w-1/4 text-center md:text-left">
+                        <div className="text-2xl uppercase text-indigo-600 font-bold mb-4">
                             Support
                         </div>
-                        <a className="my-2 block" href="/#">
+                        <a className="my-2 block hover:underline" href="/#">
                             Contact Us
                         </a>
-                        <a className="my-2 block" href="/#">
+                        <a className="my-2 block hover:underline" href="/#">
                             Privacy Policy
                         </a>
-                        <a className="my-2 block" href="/#">
+                        <a className="my-2 block hover:underline" href="/#">
                             Terms of Service
                         </a>
-                        <a className="my-2 block" href="/#">
+                        <a className="my-2 block hover:underline" href="/#">
                             FAQs
+                        </a>
+                        <a className="my-2 block hover:underline" href="/#">
+                            Donate
                         </a>
                     </div>
                 </div>
             </div>
 
             <div className="bg-black-500">
-                <div className="flex flex-col items-center p-4 text-slate-50 text-sm text-center max-w-screen-lg m-auto">
-                    <div>
-                        This site is not affiliated with Valve, Steam, or any of
-                        their partners.
-                    </div>
-                    <div className="mt-2">
-                        logo.aqui © Copyright {new Date().getFullYear()}. All
-                        Rights Reserved.
+                <div className="flex flex-col items-center p-2 text-slate-50 text-sm text-center m-auto">
+                    <div className="flex flex-col justify-center items-center text-center">
+                        <div>
+                            This site is not affiliated with Valve, Steam, or
+                            any of their partners.
+                        </div>
+                        <div className="mt-2">
+                            Copyright © {new Date().getFullYear()} CS2Data.info. Powered by Steam.
+                        </div>
                     </div>
                 </div>
             </div>

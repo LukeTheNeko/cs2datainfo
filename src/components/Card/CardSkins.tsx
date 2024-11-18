@@ -29,6 +29,7 @@ export default function CardSkins(props: CardProps) {
             .toLowerCase()
             .trim()
             .replace(/\|/g, "") // Remove "|"
+            .replace(/[ā]/g, "a") // ã to a remove ~
             .replace(/CS:GO/g, "") // Remove "CS:GO"
             .replace(/StatTrak™/g, "") // Remove "StatTrak™"
             .replace(/\(Holo\/Foil\)/g, "") // Remove "(Holo/Foil)"
@@ -121,6 +122,7 @@ export default function CardSkins(props: CardProps) {
                     href={`${props.basePath}/${encodeURIComponent(
                         props.collectionName
                             .replace(/\|/g, "") // Remove "|"
+                            .replace(/[ãâàáä]/g, "a")
                             .replace(/CS:GO/g, "") // Remove "CS:GO"
                             .replace(/StatTrak™/g, "") // Remove "StatTrak™"
                             .replace(/\(Holo\/Foil\)/g, "") // Remove "(Holo/Foil)"

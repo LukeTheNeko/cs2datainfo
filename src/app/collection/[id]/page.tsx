@@ -104,7 +104,7 @@ export default async function Collection({
                             collectionSet.contains
                                 .slice()
                                 .reverse()
-                                .map((item: Skin, index: number) => {
+                                .map((item: Skin) => {
                                     const skinData = skinsData.find(
                                         (skin) => skin.name === item.name,
                                     );
@@ -116,7 +116,7 @@ export default async function Collection({
 
                                     return (
                                         <CardSkins
-                                            key={index}
+                                            key={item.id}
                                             skinName={item.name}
                                             imageUrl={item.image}
                                             rarity={item.rarity}

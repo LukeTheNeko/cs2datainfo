@@ -1,67 +1,18 @@
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
+import CollectionCase from "@/components/Items/CollectionCase";
+import Summary from "@/components/Items/Summary";
 import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Slider } from "./slider";
-
-interface Skin {
-    id: string;
-    name: string;
-    description: string;
-    weapon: {
-        id: string;
-        name: string;
-    };
-    category: {
-        id: string;
-        name: string;
-    };
-    pattern: {
-        id: string;
-        name: string;
-    };
-    min_float: number;
-    max_float: number;
-    rarity: {
-        id: string;
-        name: string;
-        color: string;
-    };
-    stattrak: string;
-    souvenir: string;
-    finish_style: {
-        id: string;
-        name: string;
-    };
-    paint_index: string;
-    wears: Array<{
-        id: string;
-        name: string;
-    }>;
-    collections: Array<{
-        id: string;
-        name: string;
-        image: string;
-    }>;
-    crates: Array<{
-        id: string;
-        name: string;
-        image: string;
-    }>;
-    team: {
-        id: string;
-        name: string;
-    };
-    image: string;
-}
+import { Skin } from "@/components/Items/skin";
 
 export default async function Item({ params }: { params: { id: string } }) {
-    // Função para formatar o nome da skin
     function formatSkinName(name: string): string {
         return name
             .replace(/\|/g, "") // Remove "|"
             .replace(/CS:GO/g, "") // Remove "CS:GO"
+            .replace(/[ā]/g, "a") // ã to a remove ~
             .replace(/StatTrak™/g, "") // Remove "StatTrak™"
             .replace(/\(Holo\/Foil\)/g, "") // Remove "(Holo/Foil)"
             .replace(/\(Foil\)/g, "") // Remove "(Foil)"
@@ -88,35 +39,14 @@ export default async function Item({ params }: { params: { id: string } }) {
     const skins = await fetchSkinData();
 
     if (!skins) {
-        return notFound(); // Retorna um 404 caso as skins não sejam encontradas
+        return notFound();
     }
 
-    // Tenta encontrar a skin correspondente ao ID da URL
     const skin = skins.find((item) => formatSkinName(item.name) === params.id);
 
     if (!skin) {
-        return notFound(); // Retorna um 404 se a skin não for encontrada
+        return notFound();
     }
-
-    /*  */
-
-    const processDescription = (description: string) => {
-        const flavorTextRegex = /<i>(.*?)<\/i>/;
-        const flavorTextMatch = description.match(flavorTextRegex);
-        const cleanedDescription = description
-            .replace(flavorTextRegex, "")
-            .replace(/\\n/g, " ")
-            .trim();
-
-        return {
-            cleanedDescription,
-            flavorText: flavorTextMatch ? flavorTextMatch[1] : null,
-        };
-    };
-
-    const { cleanedDescription, flavorText } = processDescription(
-        skin.description,
-    );
 
     const rarityClasses = {
         StatTrak: "bg-[#cf6a32]",
@@ -130,39 +60,14 @@ export default async function Item({ params }: { params: { id: string } }) {
         ? "Souvenir"
         : "Default";
 
-    const calcs = (n: number, left: boolean) => {
-        const [FN, MW, FT, WW, BS] = [0.07, 0.16, 0.39, 0.46, 0.99];
-
-        const nu =
-            n < FN
-                ? n
-                : n < MW
-                ? n - FN
-                : n < FT
-                ? n - MW
-                : n < WW
-                ? n - FT
-                : n === BS
-                ? n - 0.45
-                : n - 0.46;
-
-        const times: number =
-            n < FN ? 7 : n < MW ? 9 : n < FT ? 23 : n < WW ? 9 : 54;
-
-        const percentage: number = Number((nu * (20 / times) * 100).toFixed(2));
-
-        const pos: number =
-            n < FN ? 0 : n < MW ? 20 : n < FT ? 40 : n < WW ? 60 : 80;
-
-        const res: number = percentage + pos;
-
-        return left ? res : 100 - res;
-    };
+    const filteredSkins = skins.filter(
+        (item) => item.name === skin.name && item.phase,
+    );
 
     return (
         <>
             <Header />
-            <div className="bg-zinc-900 text-white h-screen flex flex-col">
+            <div className="bg-zinc-900 text-white flex flex-col">
                 <div className="gap-6 flex justify-center mx-20 my-10">
                     <div className="gap-2 justify-between flex flex-col">
                         <div className="flex flex-col flex-center w-[500px] h-[500px] bg-black-300 rounded-md">
@@ -187,44 +92,16 @@ export default async function Item({ params }: { params: { id: string } }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex justify-center p-2 h-[450px]">
+                            <div className="flex justify-center p-2">
                                 <Image
                                     alt={skin.name}
-                                    height={400}
-                                    width={400}
+                                    height={500}
+                                    width={500}
                                     src={skin.image}
                                     priority
                                     className="pr-2 pl-2"
                                 />
                             </div>
-                            <Slider
-                                initialValue={Number(skin.min_float || 0)}
-                                maxThumbValue={Number(skin.max_float || 0)}
-                            />
-                        </div>
-                        <div className="w-[500px] h-[90px] rounded-md justify-center items-center flex gap-4 bg-black-300">
-                            {skin.crates.map((crate) => (
-                                <Image
-                                    key={crate.id}
-                                    alt={crate.name}
-                                    height={80}
-                                    width={80}
-                                    src={crate.image}
-                                    className="pr-2 pl-2"
-                                    priority
-                                />
-                            ))}
-                            {skin.collections?.map((collection) => (
-                                <Image
-                                    key={collection.id}
-                                    alt={collection.name}
-                                    height={80}
-                                    width={80}
-                                    priority
-                                    className="pr-2 pl-2"
-                                    src={collection.image}
-                                />
-                            ))}
                         </div>
                     </div>
 
@@ -356,215 +233,46 @@ export default async function Item({ params }: { params: { id: string } }) {
                             </div>
                         )}
 
-                        <div className="w-[410px] p-5 bg-black-300 rounded-md">
-                            {(skin.min_float !== null ||
-                                skin.max_float !== null) && (
-                                <div className="flex relative mt-2 mb-2 mx-4">
-                                    {skin.max_float !== null && (
-                                        <div
-                                            className="absolute top-0"
-                                            style={{
-                                                left: `${calcs(
-                                                    skin.max_float,
-                                                    true,
-                                                )}%`,
-                                            }}
-                                        >
-                                            <span
-                                                className="text-xs absolute"
-                                                style={{
-                                                    marginTop: "-20px",
-                                                    marginLeft: "-10px",
-                                                }}
-                                            >
-                                                {Number(
-                                                    skin.max_float || 0,
-                                                ).toFixed(2)}
-                                            </span>
-                                            <svg
-                                                className="absolute w-1.5 h-1.5"
-                                                style={{
-                                                    marginTop: "-5px",
-                                                    marginLeft: "-2px",
-                                                }}
-                                                fill="currentColor"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 12 7"
-                                            >
-                                                <path d="M11.261 2.02A.96.96 0 009.941.623L6 4.35 2.06.623A.96.96 0 00.74 2.02l4.573 4.33a1 1 0 001.374 0l4.574-4.33z"></path>
-                                            </svg>
-                                        </div>
-                                    )}
-                                    {skin.min_float !== null && (
-                                        <div
-                                            className="absolute top-0"
-                                            style={{
-                                                left: `${calcs(
-                                                    skin.min_float,
-                                                    true,
-                                                )}%`,
-                                            }}
-                                        >
-                                            <span
-                                                className="text-xs absolute"
-                                                style={{
-                                                    marginTop: "-20px",
-                                                    marginLeft: "-10px",
-                                                }}
-                                            >
-                                                {Number(
-                                                    skin.min_float || 0,
-                                                ).toFixed(2)}
-                                            </span>
-                                            <svg
-                                                className="absolute w-1.5 h-1.5"
-                                                style={{
-                                                    marginTop: "-5px",
-                                                    marginLeft: "-2px",
-                                                }}
-                                                fill="currentColor"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 12 7"
-                                            >
-                                                <path d="M11.261 2.02A.96.96 0 009.941.623L6 4.35 2.06.623A.96.96 0 00.74 2.02l4.573 4.33a1 1 0 001.374 0l4.574-4.33z"></path>
-                                            </svg>
-                                        </div>
-                                    )}
-                                    <div className="absolute top-0 left-0 right-0 h-[3px] z-20 bg-red-600"></div>
-                                    {skin.min_float !== null &&
-                                        skin.max_float !== null && (
-                                            <div
-                                                className="absolute z-20 top-0 h-[3px] bg-green-600"
-                                                style={{
-                                                    left: `${calcs(
-                                                        skin.min_float,
-                                                        true,
-                                                    )}%`,
-                                                    right: `${calcs(
-                                                        skin.max_float,
-                                                        false,
-                                                    )}%`,
-                                                }}
-                                            ></div>
-                                        )}
+                        <Summary skin={skin} />
 
-                                    <div className="relative group w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r rounded-bl tippy">
-                                        <span className="text-sm">FN</span>{" "}
-                                        <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-45px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
-                                            Factory New: 0.00 - 0.07
-                                            <div className="tooltip-arrow absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black-400"></div>
-                                        </div>
-                                    </div>
-
-                                    <div className="relative group w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
-                                        <span className="text-sm">MW</span>{" "}
-                                        <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-45px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
-                                            Minimal Wear: 0.07 - 0.15
-                                            <div className="tooltip-arrow absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black-400"></div>
-                                        </div>
-                                    </div>
-
-                                    <div className="relative group w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
-                                        <span className="text-sm">FT</span>{" "}
-                                        <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-45px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
-                                            Field-Tested: 0.15 - 0.38
-                                            <div className="tooltip-arrow absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black-400"></div>
-                                        </div>
-                                    </div>
-
-                                    <div className="relative group w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
-                                        <span className="text-sm">WW</span>{" "}
-                                        <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-45px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
-                                            Well-Worn: 0.38 - 0.45
-                                            <div className="tooltip-arrow absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black-400"></div>
-                                        </div>
-                                    </div>
-
-                                    <div className="relative group w-1/5 bg-black-400 text-center shadow-md py-2 rounded-br">
-                                        <span className="text-sm">BS</span>{" "}
-                                        <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-45px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
-                                            Battle-Scarred: 0.45 - 1.00
-                                            <div className="tooltip-arrow absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black-400"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
-                            <div className="font-medium">
-                                <div className="flex">
-                                    <span className="font-extralight text-sm">
-                                        <span className="font-medium pr-2 text-base">
-                                            Description:
-                                        </span>
-                                        {cleanedDescription}
-                                    </span>
-                                </div>
-                                {flavorText && (
-                                    <div className="flex">
-                                        <span className="font-extralight text-sm">
-                                            <span className="font-medium pr-2 text-base">
-                                                Flavor Text:
-                                            </span>
-                                            <span className="special-flavor-text">
-                                                {flavorText}
-                                            </span>
-                                        </span>
-                                    </div>
-                                )}
-                                {skin.weapon?.name && (
-                                    <div className="flex">
-                                        <span className="font-extralight text-sm">
-                                            <span className="font-medium pr-2 text-base">
-                                                Category:
-                                            </span>
-                                            {skin.weapon.name}
-                                        </span>
-                                    </div>
-                                )}
-                                {skin.category?.name && (
-                                    <div className="flex">
-                                        <span className="font-extralight text-sm">
-                                            <span className="font-medium pr-2 text-base">
-                                                Type:
-                                            </span>
-                                            {skin.category.name}
-                                        </span>
-                                    </div>
-                                )}
-                                {skin.pattern?.name && (
-                                    <div className="flex">
-                                        <span className="font-extralight text-sm">
-                                            <span className="font-medium pr-2 text-base">
-                                                Finish:
-                                            </span>
-                                            {skin.pattern.name}
-                                        </span>
-                                    </div>
-                                )}
-                                {skin.finish_style?.name && (
-                                    <div className="flex">
-                                        <span className="font-extralight text-sm">
-                                            <span className="font-medium pr-2 text-base">
-                                                Finish Style:
-                                            </span>
-                                            {skin.finish_style.name}
-                                        </span>
-                                    </div>
-                                )}
-                                {skin.paint_index && (
-                                    <div className="flex">
-                                        <span className="font-extralight text-sm">
-                                            <span className="font-medium pr-2 text-base">
-                                                Finish Catalog:
-                                            </span>
-                                            {skin.paint_index}
-                                        </span>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
+                        <CollectionCase skin={skin} />
                     </div>
                 </div>
+
+                {filteredSkins.length > 0 && (
+                    <div className="bg-black-300 md:mx-20 mx-10 my-10 p-4 rounded-md flex flex-col justify-center items-center text-center shadow-md">
+                        <span className="text-3xl md:text-5xl font-medium">
+                            Skin Variations
+                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center items-center gap-4 m-5">
+                            {filteredSkins.map((skin) => (
+                                <div
+                                    key={skin.id}
+                                    className="flex flex-col p-4"
+                                >
+                                    <div className="whitespace-nowrap flex flex-col">
+                                        <span className="text-lg font-medium">
+                                            {skin.phase}
+                                        </span>
+                                        <span className="text-sm font-light">
+                                            Finish Catalog #{skin.paint_index}
+                                        </span>
+                                    </div>
+                                    {skin.image && (
+                                        <Image
+                                            height={500}
+                                            width={500}
+                                            src={skin.image}
+                                            alt={skin.phase}
+                                            className="my-2"
+                                        />
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 <Footer />
             </div>
         </>

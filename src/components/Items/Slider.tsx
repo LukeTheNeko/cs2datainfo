@@ -72,12 +72,10 @@ export function Slider({ initialValue, maxThumbValue }: SliderProps) {
             accumulatedWidth = end;
 
             if (width > 0) {
-                // Verifica se `initialValue` está neste intervalo para `rounded-l`
                 const isStart =
                     initialValue >= accumulatedWidth - width &&
                     initialValue <= end;
 
-                // Verifica se `maxThumbValue` está neste intervalo para `rounded-r`
                 const isEnd = maxThumbValue > start && maxThumbValue <= end;
 
                 colorStyles.push(

@@ -121,11 +121,11 @@ export default async function Cases({ params }: { params: { id: string } }) {
                                         | "Souvenir" =
                                         rarityToSpecialOption[
                                             item.rarity.name
-                                        ] || "Default"; // Valor padrão
+                                        ] || "Default";
 
                                     return (
                                         <CardSkins
-                                            key={item.name}
+                                            key={item.id}
                                             skinName={item.name}
                                             imageUrl={item.image}
                                             rarity={item.rarity}

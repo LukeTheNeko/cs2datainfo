@@ -1,10 +1,8 @@
-import CardRareSpecial from "@/components/Card/CardRareSpecial";
 import CardSkins from "@/components/Card/CardSkins";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 interface Skin {
@@ -48,7 +46,7 @@ export default async function Cases({ params }: { params: { id: string } }) {
             "https://api.cs2data.info/en/crates.json",
         );
         const cases = response.data.filter(
-            (item: Crate) => item.type === "Case",
+            (item: Crate) => item.type === "Souvenir",
         );
 
         crate =
@@ -81,23 +79,11 @@ export default async function Cases({ params }: { params: { id: string } }) {
                     </div>
                     <span className="crate-info">
                         <span className="crate-name">{crate.name}</span>
-                        <span className="crate-sale-date">
-                            First Sale Date: {crate.first_sale_date}
-                        </span>
                     </span>
                 </div>
 
                 <div className="flex justify-center items-center my-4">
                     <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center items-center">
-                        <Link
-                            href={`/cases/${formatNameForId(
-                                crate.name,
-                            )}/rare-items`}
-                            className="flex justify-center items-center my-4"
-                        >
-                            <CardRareSpecial params={{ id: crate.id }} rare />
-                        </Link>
-
                         {crate.contains && crate.contains.length > 0 ? (
                             crate.contains
                                 .slice()

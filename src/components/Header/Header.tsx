@@ -224,7 +224,7 @@ export default function Header() {
                                 href="/"
                                 className="text-white no-underline flex"
                             >
-                                <FaHome size={20} /> <span>Home</span>
+                                <FaHome size={20} /> <span className="ml-2">Home</span>
                             </a>
                         </li>
                         <Dropdown
