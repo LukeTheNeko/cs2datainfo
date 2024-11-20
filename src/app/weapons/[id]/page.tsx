@@ -93,9 +93,11 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                 <title>{metadata.title}</title>
                 <meta name="description" content={metadata.description} />
                 <meta name="title" content={metadata.title} />
+                <link rel="mask-icon" href="/mask-icon.svg" color="#4f46e5" />
+                <meta name="theme-color" content="#4f46e5" />
                 <meta
-                    name="description"
-                    content="Browse all CS2 skins, knives, gloves, cases, collections, stickers, music kits, and more."
+                    property="og:image"
+                    content={`https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${uniqueSkins[0].weapon.id}_png.png`}
                 />
 
                 <div className="bg-zinc-900">
