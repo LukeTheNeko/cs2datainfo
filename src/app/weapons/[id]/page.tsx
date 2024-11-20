@@ -5,6 +5,7 @@ import axios from "axios";
 import { notFound } from "next/navigation";
 import { weaponsArray } from "./weaponsData";
 import Image from "next/image";
+import Head from "next/head";
 
 interface Skin {
     id: string;
@@ -66,7 +67,6 @@ export default async function Weapons({ params }: { params: { id: string } }) {
             "https://api.cs2data.info/en/skins.json",
         );
 
-        // Filtrar e organizar skins, mantendo apenas uma por `skinName`
         const uniqueSkins = Array.from(
             new Map(
                 data
@@ -86,16 +86,24 @@ export default async function Weapons({ params }: { params: { id: string } }) {
 
         return (
             <>
-                <link rel="mask-icon" href="/mask-icon.svg" color="#eb4034" />
-                <meta name="theme-color" content="#eb4034" />
-                <meta
-                    name="title"
-                    content={`All ${weaponName} Skins - CS2Data.info`}
-                />
-                <meta
-                    name="description"
-                    content={`All ${weaponName} Skins - CS2Data Browse all CS2 skins, knives, gloves, cases, collections, stickers, music kits, and more.`}
-                />
+                <title>{`All ${weaponName} Skins - CS2Data.info`}</title>
+                <Head>
+                    <link
+                        rel="mask-icon"
+                        href="/mask-icon.svg"
+                        color="#eb4034"
+                    />
+                    <meta name="theme-color" content="#eb4034" />
+                    <meta
+                        name="title"
+                        content={`All ${weaponName} Skins - CS2Data.info`}
+                    />
+                    <meta
+                        name="description"
+                        content={`All ${weaponName} Skins - CS2Data Browse all CS2 skins, knives, gloves, cases, collections, stickers, music kits, and more.`}
+                    />
+                    {/* Adicione outras metatags, como Open Graph e Twitter Cards */}
+                </Head>
 
                 <div className="bg-zinc-900">
                     <Header />
