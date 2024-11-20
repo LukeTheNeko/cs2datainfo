@@ -99,6 +99,21 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                     property="og:image"
                     content={`https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${uniqueSkins[0].weapon.id}_png.png`}
                 />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://cs2data.info/" />
+                <meta property="og:title" content={metadata.title} />
+                <meta
+                    property="og:description"
+                    content={metadata.description}
+                />
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:url" content="https://cs2data.info/" />
+                <meta property="twitter:title" content={metadata.title} />
+                <meta
+                    property="twitter:description"
+                    content={metadata.description}
+                />
+                <meta property="twitter:image" content="/meta-tags.png" />
 
                 <div className="bg-zinc-900">
                     <Header />
