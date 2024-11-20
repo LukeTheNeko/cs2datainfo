@@ -2,9 +2,10 @@ import CardSkins from "@/components/Card/CardSkins";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import axios from "axios";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { weaponsArray } from "./weaponsData";
-import Image from "next/image";
+import { Metadata } from "next";
 import Head from "next/head";
 
 interface Skin {
@@ -84,26 +85,20 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                 ? uniqueSkins[0].weapon.name
                 : "Unknown Weapon";
 
+        const metadata = {
+            title: `All ${weaponName} Skins - CS2Data`,
+            description: `Browse all ${weaponName} skins, knives, gloves, cases, collections, stickers, music kits, and more.`,
+        };
+
         return (
             <>
-                <title>{`All ${weaponName} Skins - CS2Data.info`}</title>
-                <Head>
-                    <link
-                        rel="mask-icon"
-                        href="/mask-icon.svg"
-                        color="#eb4034"
-                    />
-                    <meta name="theme-color" content="#eb4034" />
-                    <meta
-                        name="title"
-                        content={`All ${weaponName} Skins - CS2Data.info`}
-                    />
-                    <meta
-                        name="description"
-                        content={`All ${weaponName} Skins - CS2Data Browse all CS2 skins, knives, gloves, cases, collections, stickers, music kits, and more.`}
-                    />
-                    {/* Adicione outras metatags, como Open Graph e Twitter Cards */}
-                </Head>
+                <title>{metadata.title}</title>
+                <meta name="description" content={metadata.description} />
+                <meta name="title" content={metadata.title} />
+                <meta
+                    name="description"
+                    content="Browse all CS2 skins, knives, gloves, cases, collections, stickers, music kits, and more."
+                />
 
                 <div className="bg-zinc-900">
                     <Header />
