@@ -92,8 +92,8 @@ export default function RootLayout({
                     href="/apple-touch-icon.png"
                     sizes="180x180"
                 />
-                <link rel="mask-icon" href="/mask-icon.svg" color="#4f46e5" />
-                <meta name="theme-color" content="#4f46e5" />
+                {/* <link rel="mask-icon" href="/mask-icon.svg" color="#4f46e5" />
+                <meta name="theme-color" content="#4f46e5" /> */}
 
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content="https://cs2data.info/" />

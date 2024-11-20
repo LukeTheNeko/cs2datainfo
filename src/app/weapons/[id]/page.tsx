@@ -71,8 +71,8 @@ export default async function Weapons({ params }: { params: { id: string } }) {
             new Map(
                 data
                     .filter((item) => weaponId === item.weapon.id)
-                    .map((item) => [item.name, item])
-            ).values()
+                    .map((item) => [item.name, item]),
+            ).values(),
         ).sort(
             (a, b) =>
                 rarityOrder.indexOf(a.rarity.name) -
@@ -86,7 +86,16 @@ export default async function Weapons({ params }: { params: { id: string } }) {
 
         return (
             <>
-                <title>{`All ${weaponName} Skins - CS2Data Browse all CS2 skins, knives, gloves, cases, collections, stickers, music kits, and more.`}</title>
+                <link rel="mask-icon" href="/mask-icon.svg" color="#eb4034" />
+                <meta name="theme-color" content="#eb4034" />
+                <meta
+                    name="title"
+                    content={`All ${weaponName} Skins - CS2Data.info`}
+                />
+                <meta
+                    name="description"
+                    content={`All ${weaponName} Skins - CS2Data Browse all CS2 skins, knives, gloves, cases, collections, stickers, music kits, and more.`}
+                />
 
                 <div className="bg-zinc-900">
                     <Header />
