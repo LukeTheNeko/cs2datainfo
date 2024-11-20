@@ -5,8 +5,6 @@ import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { weaponsArray } from "./weaponsData";
-import { Metadata } from "next";
-import Head from "next/head";
 
 interface Skin {
     id: string;
