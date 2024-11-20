@@ -1,4 +1,4 @@
-"use client";
+/* "use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./slider.module.scss";
@@ -145,3 +145,4 @@ export function Slider({ initialValue, maxThumbValue }: SliderProps) {
         </div>
     );
 }
+*/

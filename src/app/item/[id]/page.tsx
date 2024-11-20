@@ -6,6 +6,7 @@ import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Skin } from "@/components/Items/skin";
+import Link from "next/link";
 
 export default async function Item({ params }: { params: { id: string } }) {
     function formatSkinName(name: string): string {
@@ -106,135 +107,280 @@ export default async function Item({ params }: { params: { id: string } }) {
                     </div>
 
                     <div className="flex flex-col justify-between gap-2 w-[410px] rounded-md">
-                        <div className="flex flex-col p-5 rounded-md bg-black-300">
-                            <div className="flex justify-between">
-                                <span>Factory New</span>
-                                <span>$ TO DO</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Minimal Wear</span>
-                                <span>$ TO DO</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Field-Tested</span>
-                                <span>$ TO DO</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Well-Worn</span>
-                                <span>$ TO DO</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Battle-Scarred</span>
-                                <span>$ TO DO</span>
-                            </div>
+                        <div className="flex flex-col p-2 rounded-md bg-black-300">
+                            {[
+                                "Factory New",
+                                "Minimal Wear",
+                                "Field-Tested",
+                                "Well-Worn",
+                                "Battle-Scarred",
+                            ].map((wearName) => {
+                                const exists = skin.wears.some(
+                                    (w) => w.name === wearName,
+                                );
+                                const linkClass = exists
+                                    ? "flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md my-0.5"
+                                    : "flex justify-between bg-black-400 px-2 py-0.5 rounded-md cursor-not-allowed opacity-45 my-0.5";
+
+                                return (
+                                    <Link
+                                        key={wearName}
+                                        className={linkClass}
+                                        href={
+                                            exists
+                                                ? `https://steamcommunity.com/market/listings/730/${skin.name} (${wearName})`
+                                                : "#"
+                                        }
+                                        target="_blank"
+                                    >
+                                        <span>{wearName}</span>
+                                        <span>
+                                            {exists
+                                                ? "$ TO DO MAKE PRICES"
+                                                : "Not possible"}
+                                        </span>
+                                    </Link>
+                                );
+                            })}
                         </div>
 
-                        {(skin.stattrak || skin.souvenir) && (
-                            <div className="flex flex-col p-5 rounded-md bg-black-300">
+                        {/* {(skin.stattrak || skin.souvenir) && (
+                            <div className="flex flex-col p-2 rounded-md bg-black-300">
                                 {skin.stattrak && (
                                     <>
-                                        <div className="flex justify-between">
+                                        <Link
+                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
+                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
+                                            target="_blank"
+                                        >
                                             <span>
                                                 <span className="text-orange-400 font-medium">
                                                     StatTrak
                                                 </span>{" "}
                                                 Factory New
                                             </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
+                                            <span>$ TO DO MAKE PRICES</span>
+                                        </Link>
+                                        <Link
+                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
+                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
+                                            target="_blank"
+                                        >
                                             <span>
                                                 <span className="text-orange-400 font-medium">
                                                     StatTrak
                                                 </span>{" "}
                                                 Minimal Wear
                                             </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
+                                            <span>$ TO DO MAKE PRICES</span>
+                                        </Link>
+                                        <Link
+                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
+                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
+                                            target="_blank"
+                                        >
                                             <span>
                                                 <span className="text-orange-400 font-medium">
                                                     StatTrak
                                                 </span>{" "}
                                                 Field-Tested
                                             </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
+                                            <span>$ TO DO MAKE PRICES</span>
+                                        </Link>
+                                        <Link
+                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
+                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
+                                            target="_blank"
+                                        >
                                             <span>
                                                 <span className="text-orange-400 font-medium">
                                                     StatTrak
                                                 </span>{" "}
                                                 Well-Worn
                                             </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
+                                            <span>$ TO DO MAKE PRICES</span>
+                                        </Link>
+                                        <Link
+                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
+                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
+                                            target="_blank"
+                                        >
                                             <span>
                                                 <span className="text-orange-400 font-medium">
                                                     StatTrak
                                                 </span>{" "}
                                                 Battle-Scarred
                                             </span>
-                                            <span>$ TO DO</span>
-                                        </div>
+                                            <span>$ TO DO MAKE PRICES</span>
+                                        </Link>
                                     </>
                                 )}
 
                                 {skin.souvenir && (
                                     <>
-                                        <div className="flex justify-between">
+                                        <Link
+                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
+                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
+                                            target="_blank"
+                                        >
                                             <span>
                                                 <span className="text-yellow-400 font-medium">
                                                     Souvenir
                                                 </span>{" "}
                                                 Factory New
                                             </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
+                                            <span>$ TO DO MAKE PRICES</span>
+                                        </Link>
+                                        <Link
+                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
+                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
+                                            target="_blank"
+                                        >
                                             <span>
                                                 <span className="text-yellow-400 font-medium">
                                                     Souvenir
                                                 </span>{" "}
                                                 Minimal Wear
                                             </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
+                                            <span>$ TO DO MAKE PRICES</span>
+                                        </Link>
+                                        <Link
+                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
+                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
+                                            target="_blank"
+                                        >
                                             <span>
                                                 <span className="text-yellow-400 font-medium">
                                                     Souvenir
                                                 </span>{" "}
                                                 Field-Tested
                                             </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
+                                            <span>$ TO DO MAKE PRICES</span>
+                                        </Link>
+                                        <Link
+                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
+                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
+                                            target="_blank"
+                                        >
                                             <span>
                                                 <span className="text-yellow-400 font-medium">
                                                     Souvenir
                                                 </span>{" "}
                                                 Well-Worn
                                             </span>
-                                            <span>$ TO DO</span>
-                                        </div>
-                                        <div className="flex justify-between">
+                                            <span>$ TO DO MAKE PRICES</span>
+                                        </Link>
+                                        <Link
+                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
+                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
+                                            target="_blank"
+                                        >
                                             <span>
                                                 <span className="text-yellow-400 font-medium">
                                                     Souvenir
                                                 </span>{" "}
                                                 Battle-Scarred
                                             </span>
-                                            <span>$ TO DO</span>
-                                        </div>
+                                            <span>$ TO DO MAKE PRICES</span>
+                                        </Link>
+                                    </>
+                                )}
+                            </div>
+                        )} */}
+
+                        {(skin.stattrak || skin.souvenir) && (
+                            <div className="flex flex-col p-2 rounded-md bg-black-300">
+                                {skin.stattrak && (
+                                    <>
+                                        {[
+                                            "Factory New",
+                                            "Minimal Wear",
+                                            "Field-Tested",
+                                            "Well-Worn",
+                                            "Battle-Scarred",
+                                        ].map((wearName) => {
+                                            const exists = skin.wears.some(
+                                                (w) => w.name === wearName,
+                                            );
+                                            const linkClass = exists
+                                                ? "flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md my-0.5"
+                                                : "flex justify-between bg-black-400 px-2 py-0.5 rounded-md cursor-not-allowed opacity-45 my-0.5";
+
+                                            return (
+                                                <Link
+                                                    key={wearName}
+                                                    className={linkClass}
+                                                    href={
+                                                        exists
+                                                            ? `https://steamcommunity.com/market/listings/730/StatTrak™ ${skin.name} (${wearName})`
+                                                            : "#"
+                                                    }
+                                                    target="_blank"
+                                                >
+                                                    <span>
+                                                        <span className="text-orange-400 font-medium">
+                                                            StatTrak
+                                                        </span>{" "}
+                                                        {wearName}
+                                                    </span>
+                                                    <span>
+                                                        {exists
+                                                            ? "$ TO DO MAKE PRICES"
+                                                            : "Not possible"}
+                                                    </span>
+                                                </Link>
+                                            );
+                                        })}
+                                    </>
+                                )}
+
+                                {skin.souvenir && (
+                                    <>
+                                        {[
+                                            "Factory New",
+                                            "Minimal Wear",
+                                            "Field-Tested",
+                                            "Well-Worn",
+                                            "Battle-Scarred",
+                                        ].map((wearName) => {
+                                            const exists = skin.wears.some(
+                                                (w) => w.name === wearName,
+                                            );
+                                            const linkClass = exists
+                                                ? "flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md my-0.5"
+                                                : "flex justify-between bg-black-400 px-2 py-0.5 rounded-md cursor-not-allowed opacity-45 my-0.5";
+
+                                            return (
+                                                <Link
+                                                    key={wearName}
+                                                    className={linkClass}
+                                                    href={
+                                                        exists
+                                                            ? `https://steamcommunity.com/market/listings/730/Souvenir ${skin.name} (${wearName})`
+                                                            : "#"
+                                                    }
+                                                    target="_blank"
+                                                >
+                                                    <span>
+                                                        <span className="text-yellow-400 font-medium">
+                                                            Souvenir
+                                                        </span>{" "}
+                                                        {wearName}
+                                                    </span>
+                                                    <span>
+                                                        {exists
+                                                            ? "$ TO DO MAKE PRICES"
+                                                            : "Not possible"}
+                                                    </span>
+                                                </Link>
+                                            );
+                                        })}
                                     </>
                                 )}
                             </div>
                         )}
 
                         <Summary skin={skin} />
-
                         <CollectionCase skin={skin} />
                     </div>
                 </div>
@@ -247,7 +393,7 @@ export default async function Item({ params }: { params: { id: string } }) {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center items-center gap-4 m-5">
                             {filteredSkins.map((skin) => (
                                 <div
-                                    key={skin.id}
+                                    key={`${skin.name}-${skin.paint_index}-${skin.phase}`}
                                     className="flex flex-col p-4"
                                 >
                                     <div className="whitespace-nowrap flex flex-col">

@@ -1,5 +1,5 @@
 import Wears from "./Wears";
-import { Skin } from './skin';
+import { Skin } from "./skin";
 
 const processDescription = (description: string) => {
     const flavorTextRegex = /<i>(.*?)<\/i>/;

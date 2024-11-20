@@ -18,7 +18,7 @@ const CollectionCase = ({ skin }: { skin: Skin }) => {
                     <div className="h-[90px] rounded-md justify-center items-center flex gap-4 bg-black-300 p-2">
                         {skin.collections.map((collection) => (
                             <div
-                                key={collection.id}
+                                key={collection.name}
                                 className="flex flex-col items-center gap-2"
                             >
                                 <Link
@@ -48,7 +48,7 @@ const CollectionCase = ({ skin }: { skin: Skin }) => {
                     <div className="min-h-[90px] rounded-md justify-center items-center flex flex-wrap gap-4 bg-black-300 p-2">
                         {skin.crates.map((crate) => (
                             <div
-                                key={crate.id}
+                                key={`${crate.name}-${skin.id}`}
                                 className="flex items-center gap-2"
                             >
                                 <Link

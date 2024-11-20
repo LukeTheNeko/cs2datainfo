@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FaInfoCircle } from "react-icons/fa";
 
 type Item = {
@@ -21,8 +22,13 @@ export default function NewItems({ items }: NewItemsProps) {
                     <FaInfoCircle />
                     <h2 className="text-lg sm:text-2xl font-semibold">
                         Check out all the new{" "}
-                        <span className="font-semibold text-indigo-500">
-                            Armory
+                        <span className="font-semibold text-indigo-500 hover:underline">
+                            <Link
+                                href="https://store.steampowered.com/sale/armory"
+                                target="_blank"
+                            >
+                                Armory
+                            </Link>
                         </span>{" "}
                         items!
                     </h2>
@@ -31,10 +37,7 @@ export default function NewItems({ items }: NewItemsProps) {
 
             <div className="flex flex-wrap justify-center gap-2">
                 {items.map((item, index) => (
-                    <div
-                        key={index}
-                        className="relative p-4 w-36 h-36"
-                    >
+                    <div key={index} className="relative p-4 w-36 h-36">
                         <a className="group block" href={item.href}>
                             <div className="flex flex-col items-center justify-center">
                                 <Image
@@ -50,7 +53,7 @@ export default function NewItems({ items }: NewItemsProps) {
                                 </div>
                             </div>
 
-                            <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-35px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
+                            <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-sm font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-30px] w-auto transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
                                 {item.amount} new {item.amountname}
                                 <div className="tooltip-arrow absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black-400"></div>
                             </div>

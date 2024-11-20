@@ -49,9 +49,16 @@ export default function Wears({ values }: WearsProps) {
         label: string;
         range: string;
         value: number;
+        isFirst: boolean;
+        isLast: boolean;
     }) => {
         return (
-            <div className="relative group w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy">
+            <div
+                key={category.label}
+                className={`relative group w-1/5 bg-black-400 text-center shadow-md py-2 border-black-500 border-r tippy ${
+                    category.isFirst ? 'rounded-l-md' : ''
+                } ${category.isLast ? 'rounded-r-md' : ''}`}
+            >
                 <span className="text-sm">{category.label}</span>
                 <div className="absolute opacity-0 group-hover:opacity-100 z-10 text-xs font-medium text-white rounded-md shadow-sm px-3 py-1.5 top-0 left-1/2 transform -translate-x-1/2 mt-[-40px] w-auto max-w-xs transition-opacity duration-300 tooltip bg-black-400 whitespace-nowrap">
                     {category.label}: {category.range}
@@ -136,7 +143,13 @@ export default function Wears({ values }: WearsProps) {
                         ></div>
                     )}
 
-                    {wearCategories.map(renderCategory)}
+                    {wearCategories.map((category, index) => 
+                        renderCategory({
+                            ...category,
+                            isFirst: index === 0,
+                            isLast: index === wearCategories.length - 1,
+                        })
+                    )}
                 </div>
             )}
         </>
