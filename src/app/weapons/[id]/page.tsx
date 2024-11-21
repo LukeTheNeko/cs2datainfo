@@ -102,7 +102,7 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                     property="og:description"
                     content={metadata.description}
                 />
-                <meta property="twitter:card" content="summary_large_image" />
+                {/* <meta property="twitter:card" content="summary_large_image" /> */}
                 <meta property="twitter:url" content="https://cs2data.info/" />
                 <meta property="twitter:title" content={metadata.title} />
                 <meta
