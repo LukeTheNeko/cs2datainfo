@@ -1,46 +1,30 @@
-import { ImageResponse } from "next/og";
-import crypto from "crypto";
+import { ImageResponse } from "next/og"; // Importa o ImageResponse para criar a imagem OG
+// O módulo 'crypto' não pode ser usado diretamente em Edge Functions. Em vez disso, usamos a Web Crypto API.
 
-export const runtime = "edge";
-
-// Função para gerar um hash SHA-256 a partir da URL da imagem
-function generateImageHash(imageUrl: string): string {
-    return crypto.createHash('sha256').update(imageUrl).digest('hex');
-}
-
-// Função para obter a URL real da imagem com base no hash gerado
-function getImageUrlByHash(imageHash: string): string | null {
-    // Em vez de mapear manualmente, você pode construir a URL real da imagem
-    // com base no hash, supondo que as imagens sigam uma estrutura de URL
-    // específica ou armazená-las de alguma forma acessível.
-    const baseUrl = "https://img.cs2data.info/static/panorama/images/econ/";
-    return `${baseUrl}${imageHash}.png`; // Exemplo, ajustado conforme necessário
-}
+export const runtime = "edge"; // Define que a função é executada como uma Edge Function
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
+
     const imageUrl = searchParams.get("image");
 
     if (!imageUrl) {
         return new Response("Image URL is required", { status: 400 });
     }
 
-    // Gerar o hash da URL da imagem
-    const imageHash = generateImageHash(imageUrl);
+    const allowedDomain = "https://img.cs2data.info";
+    const url = new URL(imageUrl);
 
-    // Obter a URL real da imagem usando o hash
-    const imageRealUrl = getImageUrlByHash(imageHash);
-
-    if (!imageRealUrl) {
-        return new Response("Image not found", { status: 404 });
-    }
-
-    const allowedDomain = "img.cs2data.info"; // Verifique apenas o domínio
-    const url = new URL(imageRealUrl);
-
-    if (!url.hostname.endsWith(allowedDomain)) {
+    // Verifica se a URL da imagem vem do domínio permitido
+    if (url.origin !== allowedDomain) {
         return new Response("Invalid image source", { status: 403 });
     }
+
+    // Gerar o hash SHA-256 da URL da imagem usando a Web Crypto API
+    const hash = await generateImageHash(imageUrl);
+
+    // Agora você pode usar o hash gerado para ofuscar a URL ou fazer outras manipulações
+    console.log("Generated hash:", hash);
 
     return new ImageResponse(
         (
@@ -56,7 +40,7 @@ export async function GET(request: Request) {
                 }}
             >
                 <img
-                    src={imageRealUrl}
+                    src={imageUrl}
                     alt="og image"
                     style={{
                         width: "75%",
@@ -83,4 +67,22 @@ export async function GET(request: Request) {
             height: 630,
         },
     );
+}
+
+// Função para gerar o hash SHA-256 usando a Web Crypto API
+async function generateImageHash(imageUrl: string): Promise<string> {
+    // Usa o TextEncoder para converter a URL da imagem em bytes
+    const encoder = new TextEncoder();
+    const data = encoder.encode(imageUrl);
+
+    // Gera o hash SHA-256 da URL
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+    // Converte o hash em uma string hexadecimal
+    const hashArray = Array.from(new Uint8Array(hashBuffer)); // Converte o buffer em um array de bytes
+    const hashHex = hashArray
+        .map(byte => byte.toString(16).padStart(2, "0"))
+        .join(""); // Converte os bytes em uma string hexadecimal
+
+    return hashHex;
 }
