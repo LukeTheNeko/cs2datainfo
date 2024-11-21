@@ -386,7 +386,7 @@ export default async function Item({ params }: { params: { id: string } }) {
                 </div>
 
                 {filteredSkins.length > 0 && (
-                    <div className="bg-black-300 md:mx-20 mx-10 my-10 p-4 rounded-md flex flex-col justify-center items-center text-center shadow-md">
+                    <div className="bg-black-300 md:mx-20 mx-5 my-10 p-4 rounded-md flex flex-col justify-center items-center text-center shadow-md">
                         <span className="text-3xl md:text-5xl font-medium">
                             Skin Variations
                         </span>

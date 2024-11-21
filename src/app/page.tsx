@@ -5,7 +5,7 @@ import HomeCases from "@/components/Primary/HomeCases";
 const metadata = {
     title: `Browse all CS2Skins skins, knives, gloves, cases, collections, stickers, music kits, and more. - CS2Data.info`,
     description: `Browse all CS2Skins skins, knives, gloves, cases, collections, stickers, music kits, and more.`,
-    ogImageUrl: `https://www.cs2data.info/image-meta.png`,
+    ogImageUrl: `https://cs2data.info/meta-tags.png`,
 };
 
 export default function Home() {

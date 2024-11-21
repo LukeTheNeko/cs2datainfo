@@ -16,7 +16,7 @@ interface NewItemsProps {
 
 export default function NewItems({ items }: NewItemsProps) {
     return (
-        <div className="flex flex-wrap items-center justify-center bg-black-300 rounded-xl shadow-lg mx-10 md:mx-20 p-4">
+        <div className="flex flex-wrap items-center justify-center bg-black-300 rounded-xl shadow-lg mx-5 md:mx-20 p-4">
             <div className="w-full px-4 text-center flex justify-center mb-6 text-white whitespace-nowrap">
                 <div className="flex items-center justify-center space-x-2">
                     <FaInfoCircle />
