@@ -45,7 +45,7 @@ export default function NewItems({ items }: NewItemsProps) {
                                     height={100}
                                     src={item.src}
                                     alt={item.name}
-                                    className="crate-image"
+                                    className="pr-4 pl-2 w-full h-auto"
                                     priority
                                 />
                                 <div className="text-center text-sm text-white opacity-55 group-hover:opacity-100 mt-2 max-w-full">
