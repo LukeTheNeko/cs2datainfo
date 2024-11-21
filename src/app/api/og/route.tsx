@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     }
 
     // Verifica se o imageUrl pertence ao domínio cs2data.info
-    const allowedDomain = "cs2data.info";
+    const allowedDomain = "cs2datainfo.vercel.app";
     const url = new URL(imageUrl);
 
     if (url.hostname !== allowedDomain) {
