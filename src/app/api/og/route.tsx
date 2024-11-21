@@ -5,17 +5,14 @@ export const runtime = "edge";
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
-    // Recupera a URL ofuscada da imagem
     const encodedImageUrl = searchParams.get("image");
 
     if (!encodedImageUrl) {
         return new Response("Image URL is required", { status: 400 });
     }
 
-    // Decodifica a URL da imagem usando Base64
     const decodedImageUrl = decodeBase64(encodedImageUrl);
 
-    // Verifica se a URL decodificada vem de um domínio permitido
     const allowedDomain = "https://img.cs2data.info";
     const url = new URL(decodedImageUrl);
 
@@ -66,8 +63,8 @@ export async function GET(request: Request) {
     );
 }
 
-// Função para decodificar Base64
+
 function decodeBase64(encoded: string): string {
-    const decoded = atob(encoded); // Decodifica a string Base64
+    const decoded = atob(encoded);
     return decoded;
 }
