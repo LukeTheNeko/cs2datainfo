@@ -86,7 +86,7 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                 const metadata = {
                     title: `All ${weaponName} Skins - CS2Data`,
                     description: `Browse all ${weaponName} skins, knives, gloves, cases, collections, stickers, music kits, and more.`,
-                    ogImageUrl: `https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${uniqueSkins[0].weapon.id}_png.png`,
+                    ogImageUrl: `/api/og?image=https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${uniqueSkins[0].weapon.id}_png.png`,
                 };
         
                 return (
