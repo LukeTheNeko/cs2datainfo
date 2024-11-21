@@ -84,17 +84,17 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                 : "Unknown Weapon";
 
         const imageUrl = `https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${uniqueSkins[0].weapon.id}_png.png`;
-        const encodedImageUrl = btoa(imageUrl); // Codifica a URL da imagem
+        const encodedImageUrl = btoa(imageUrl);
 
-        // Atualizando o metadata com a URL codificada
         const metadata = {
-            title: `All ${weaponName} Skins - CS2Data`,
+            title: `All ${weaponName} Skins - CS2Data.info`,
             description: `Browse all ${weaponName} skins, knives, gloves, cases, collections, stickers, music kits, and more.`,
             ogImageUrl: `/api/og?image=${encodedImageUrl}`,
         };
 
         return (
             <>
+                {/* metatags */}
                 <title>{metadata.title}</title>
                 <meta name="description" content={metadata.description} />
                 <meta name="title" content={metadata.title} />
@@ -116,6 +116,7 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                 />
                 <meta property="twitter:card" content="summary_large_image" />
                 <meta property="twitter:image" content={metadata.ogImageUrl} />
+                {/* metatags */}
 
                 <div className="bg-zinc-900">
                     <Header />

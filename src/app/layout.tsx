@@ -73,6 +73,20 @@ export default function RootLayout({
                     content="https://cs2data.info/meta-tags.png"
                 /> */}
 
+                <meta
+                    name="google-adsense-account"
+                    content="ca-pub-2763973119875552"
+                />
+                <link
+                    rel="icon"
+                    type="image/x-icon"
+                    href="https://cs2data.info/favicon.ico"
+                />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0"
+                />
+
                 {children}
             </body>
         </html>

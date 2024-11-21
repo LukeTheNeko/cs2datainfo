@@ -29,7 +29,7 @@ export async function GET(request: Request) {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: "#121212",
+                    backgroundColor: "#212121",
                     position: "relative",
                 }}
             >
@@ -37,8 +37,8 @@ export async function GET(request: Request) {
                     src={decodedImageUrl}
                     alt="og image"
                     style={{
-                        width: "75%",
-                        height: "75%",
+                        width: "85%",
+                        height: "85%",
                         objectFit: "contain",
                     }}
                 />
@@ -48,7 +48,7 @@ export async function GET(request: Request) {
                         bottom: "10px",
                         right: "10px",
                         color: "white",
-                        fontSize: "18px",
+                        fontSize: "30px",
                         fontWeight: "bold",
                     }}
                 >
@@ -62,7 +62,6 @@ export async function GET(request: Request) {
         },
     );
 }
-
 
 function decodeBase64(encoded: string): string {
     const decoded = atob(encoded);
