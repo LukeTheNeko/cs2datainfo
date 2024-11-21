@@ -36,7 +36,7 @@ export async function GET(request: Request) {
                         position: "relative",
                     }}
                 >
-                    <img
+                    <img 
                         src={imageUrl}
                         alt="og image"
                         style={{
