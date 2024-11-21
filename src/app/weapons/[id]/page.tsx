@@ -83,28 +83,36 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                 ? uniqueSkins[0].weapon.name
                 : "Unknown Weapon";
 
-                const metadata = {
-                    title: `All ${weaponName} Skins - CS2Data`,
-                    description: `Browse all ${weaponName} skins, knives, gloves, cases, collections, stickers, music kits, and more.`,
-                    ogImageUrl: `/api/og?image=https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${uniqueSkins[0].weapon.id}_png.png`,
-                };
-        
-                return (
-                    <>
-                        <title>{metadata.title}</title>
-                        <meta name="description" content={metadata.description} />
-                        <meta name="title" content={metadata.title} />
-                        <link rel="mask-icon" href="/mask-icon.svg" color="#4f46e5" />
-                        <meta name="theme-color" content="#4f46e5" />
-                        <meta property="og:type" content="website" />
-                        <meta property="og:url" content="https://cs2data.info/" />
-                        <meta property="og:title" content={metadata.title} />
-                        <meta property="og:description" content={metadata.description} />
-                        <meta property="og:image" content={metadata.ogImageUrl} />
-                        <meta property="twitter:url" content="https://cs2data.info/" />
-                        <meta property="twitter:title" content={metadata.title} />
-                        <meta property="twitter:description" content={metadata.description} />
-                        <meta property="twitter:image" content={metadata.ogImageUrl} />
+        const metadata = {
+            title: `All ${weaponName} Skins - CS2Data`,
+            description: `Browse all ${weaponName} skins, knives, gloves, cases, collections, stickers, music kits, and more.`,
+            ogImageUrl: `/api/og?image=https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${uniqueSkins[0].weapon.id}_png.png`,
+        };
+
+        return (
+            <>
+                <title>{metadata.title}</title>
+                <meta name="description" content={metadata.description} />
+                <meta name="title" content={metadata.title} />
+                <link rel="mask-icon" href="/mask-icon.svg" color="#4f46e5" />
+                <meta name="theme-color" content="#4f46e5" />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://cs2data.info/" />
+                <meta property="og:title" content={metadata.title} />
+                <meta
+                    property="og:description"
+                    content={metadata.description}
+                />
+                <meta property="og:image" content={metadata.ogImageUrl} />
+                <meta property="twitter:url" content="https://cs2data.info/" />
+                <meta property="twitter:title" content={metadata.title} />
+                <meta
+                    property="twitter:description"
+                    content={metadata.description}
+                />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
+                <meta property="twitter:image" content={metadata.ogImageUrl} />
 
                 <div className="bg-zinc-900">
                     <Header />
