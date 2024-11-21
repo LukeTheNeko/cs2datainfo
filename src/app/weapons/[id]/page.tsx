@@ -110,8 +110,7 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                     property="twitter:description"
                     content={metadata.description}
                 />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
+                 <meta property="twitter:card" content="summary_large_image" />
                 <meta property="twitter:image" content={metadata.ogImageUrl} />
 
                 <div className="bg-zinc-900">

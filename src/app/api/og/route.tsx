@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge"; // Define o ambiente como Edge Function
+export const runtime = "edge";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -11,7 +11,6 @@ export async function GET(request: Request) {
         return new Response("Image URL is required", { status: 400 });
     }
 
-    // Verifique se a URL da imagem é do seu domínio
     const allowedDomain = "https://img.cs2data.info";
     const url = new URL(imageUrl);
 
@@ -36,8 +35,8 @@ export async function GET(request: Request) {
                     src={imageUrl}
                     alt="og image"
                     style={{
-                        width: "50%",
-                        height: "50%",
+                        width: "75%",
+                        height: "75%",
                         objectFit: "contain",
                     }}
                 />
@@ -48,6 +47,7 @@ export async function GET(request: Request) {
                         right: "10px",
                         color: "white",
                         fontSize: "18px",
+                        fontWeight: "bold",
                     }}
                 >
                     CS2DATA.info
