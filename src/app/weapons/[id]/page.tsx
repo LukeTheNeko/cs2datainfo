@@ -95,10 +95,6 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                 <meta name="title" content={metadata.title} />
                 <link rel="mask-icon" href="/mask-icon.svg" color="#4f46e5" />
                 <meta name="theme-color" content="#4f46e5" />
-                <meta
-                    property="og:image"
-                    content={`https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${uniqueSkins[0].weapon.id}_png.png`}
-                />
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content="https://cs2data.info/" />
                 <meta property="og:title" content={metadata.title} />
@@ -113,7 +109,10 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                     property="twitter:description"
                     content={metadata.description}
                 />
-                <meta property="twitter:image" content="/meta-tags.png" />
+                <meta
+                    property="og:image"
+                    content={`https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${uniqueSkins[0].weapon.id}_png.png`}
+                />
 
                 <div className="bg-zinc-900">
                     <Header />
