@@ -1,166 +1,211 @@
 import { FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaXTwitter, FaBluesky } from "react-icons/fa6";
 
 interface SocialLink {
-    Icon: React.FC<{ size?: number }>;
-    url: string;
+  Icon: React.FC<{ size?: number }>;
+  url: string;
 }
 
 const socialLinks: SocialLink[] = [
-    {
-        Icon: FaXTwitter,
-        url: "https://x.com/cs2datainfo",
-    },
-    {
-        Icon: FaInstagram,
-        url: "https://www.instagram.com/cs2datainfo/",
-    },
-    {
-        Icon: FaYoutube,
-        url: "https://www.youtube.com/@cs2datainfo",
-    },
-    {
-        Icon: FaTiktok,
-        url: "https://www.tiktok.com/@cs2datainfo",
-    },
+  {
+    Icon: FaXTwitter,
+    url: "https://x.com/cs2datainfo",
+  },
+  {
+    Icon: FaInstagram,
+    url: "https://www.instagram.com/cs2datainfo/",
+  },
+  {
+    Icon: FaYoutube,
+    url: "https://www.youtube.com/@cs2datainfo",
+  },
+  {
+    Icon: FaTiktok,
+    url: "https://www.tiktok.com/@cs2datainfo",
+  },
+  {
+    Icon: FaBluesky,
+    url: "https://bsky.app/profile/cs2data.info",
+  },
 ];
 
 const SocialIcon: React.FC<SocialLink> = ({ Icon, url }) => (
-    <a
-        href={url}
-        className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-indigo-600 transition-all hover:shadow-[0_0_10px_rgba(99,102,241,0.7)]"
-    >
-        <Icon size={15} />
-    </a>
+  <a
+    href={url}
+    className="flex items-center justify-center text-indigo-600 duration-300 transform hover:scale-110 px-0.5"
+  >
+    <Icon size={20} />
+  </a>
 );
 
 export default function Footer() {
-    return (
-        <>
-            <div className="bg-gradient-to-b from-black-450 to-black-400 py-8 px-4 md:px-8 text-white ">
-                <div className="container mx-auto flex flex-col md:flex-row justify-between space-y-8 md:space-y-0 md:space-x-8">
-                    <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                        <span className="font-bold text-3xl mb-2">
-                            logo
-                            <span className="text-xl font-medium text-indigo-600">
-                                .aqui
-                            </span>
-                        </span>
-                        <div className="flex mt-2 gap-3 justify-center">
-                            {socialLinks.map(({ Icon, url }, index) => (
-                                <SocialIcon key={index} Icon={Icon} url={url} />
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col items-center md:items-start">
-                        <div className="text-2xl uppercase text-indigo-600 font-bold mb-4">
-                            CS2 Skins
-                        </div>
-                        <div className="grid grid-cols-2 gap-4 w-full">
-                            <div>
-                                <a
-                                    className="my-2 block hover:underline"
-                                    href="/#"
-                                >
-                                    All Agents
-                                </a>
-                                <a
-                                    className="my-2 block hover:underline"
-                                    href="/#"
-                                >
-                                    All Cases
-                                </a>
-                                <a
-                                    className="my-2 block hover:underline"
-                                    href="/#"
-                                >
-                                    All Collections
-                                </a>
-                                <a
-                                    className="my-2 block hover:underline"
-                                    href="/#"
-                                >
-                                    All Gloves
-                                </a>
-                                <a
-                                    className="my-2 block hover:underline"
-                                    href="/#"
-                                >
-                                    All Patches
-                                </a>
-                            </div>
-                            <div>
-                                <a
-                                    className="my-2 block hover:underline"
-                                    href="/#"
-                                >
-                                    All Pins
-                                </a>
-                                <a
-                                    className="my-2 block hover:underline"
-                                    href="/#"
-                                >
-                                    All Skins
-                                </a>
-                                <a
-                                    className="my-2 block hover:underline"
-                                    href="/#"
-                                >
-                                    All Souvenir Packages
-                                </a>
-                                <a
-                                    className="my-2 block hover:underline"
-                                    href="/#"
-                                >
-                                    All Stickers
-                                </a>
-                                <a
-                                    className="my-2 block hover:underline"
-                                    href="/#"
-                                >
-                                    All Weapons
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="w-full md:w-1/4 text-center md:text-left">
-                        <div className="text-2xl uppercase text-indigo-600 font-bold mb-4">
-                            Support
-                        </div>
-                        <a className="my-2 block hover:underline" href="/#">
-                            Contact Us
-                        </a>
-                        <a className="my-2 block hover:underline" href="/#">
-                            Privacy Policy
-                        </a>
-                        <a className="my-2 block hover:underline" href="/#">
-                            Terms of Service
-                        </a>
-                        <a className="my-2 block hover:underline" href="/#">
-                            FAQs
-                        </a>
-                        <a className="my-2 block hover:underline" href="/#">
-                            Donate
-                        </a>
-                    </div>
-                </div>
+  return (
+    <>
+      <div className="bg-black-400 py-6 px-2 md:px-16 text-white flex justify-between">
+        <div className="flex flex-col justify-start items-start px-2">
+          <div className="flex flex-col items-center px-4 md:items-start text-center md:text-left">
+            <span className="font-bold text-2xl mb-2">
+              CS2DATA
+              <span className="text-lg font-medium text-indigo-600">.info</span>
+            </span>
+            <div className="flex mt-2 gap-2 justify-center">
+              {socialLinks.map(({ Icon, url }, index) => (
+                <SocialIcon key={index} Icon={Icon} url={url} />
+              ))}
             </div>
-
-            <div className="bg-black-500">
-                <div className="flex flex-col items-center p-2 text-slate-50 text-sm text-center m-auto">
-                    <div className="flex flex-col justify-center items-center text-center">
-                        <div>
-                            This site is not affiliated with Valve, Steam, or
-                            any of their partners.
-                        </div>
-                        <div className="mt-2">
-                            Copyright © {new Date().getFullYear()} CS2Data.info. Powered by Steam.
-                        </div>
-                    </div>
-                </div>
+          </div>
+        </div>
+        <div className="flex flex-row whitespace-nowrap justify-end px-4">
+          <div className="text-center px-8 md:text-left">
+            <div className="text-lg uppercase text-indigo-600 font-bold mb-2">
+              <span>Last updates</span>
             </div>
-        </>
-    );
+            <div className="text-sm">
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                Shanghai 2024 Champion Stickers
+              </a>
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                Shanghai 2024 Stickers
+              </a>
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                The Armory
+              </a>
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                Masterminds 2 Music Kits
+              </a>
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                Copenhagen 2024 Champion Stickers
+              </a>
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                Copenhagen 2024 Stickers
+              </a>
+            </div>
+          </div>
+
+          <div className="text-center px-8 md:text-left">
+            <div className="text-lg uppercase text-indigo-600 font-bold mb-2">
+              <span>Support</span>
+            </div>
+            <div className="text-sm">
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                Contact Us
+              </a>
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                Feedback
+              </a>
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                Privacy Policy
+              </a>
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                Terms of Service
+              </a>
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                Cookie Policy
+              </a>
+              <a
+                className="block opacity-80 hover:opacity-100 py-0.5"
+                href="/#"
+              >
+                Donate
+              </a>
+            </div>
+          </div>
+
+          <div className="text-center px-8 md:text-left">
+            <div className="text-lg uppercase text-indigo-600 font-bold mb-2">
+              <span>Quick Links</span>
+            </div>
+            <div className="text-center md:text-left text-[17px] whitespace-nowrap">
+              <div className="text-sm">
+                <a
+                  className="block opacity-80 hover:opacity-100 py-0.5"
+                  href="/#"
+                >
+                  All Charms
+                </a>
+                <a
+                  className="block opacity-80 hover:opacity-100 py-0.5"
+                  href="/#"
+                >
+                  All Cases
+                </a>
+                <a
+                  className="block opacity-80 hover:opacity-100 py-0.5"
+                  href="/#"
+                >
+                  All Collections
+                </a>
+                <a
+                  className="block opacity-80 hover:opacity-100 py-0.5"
+                  href="/#"
+                >
+                  All Gloves
+                </a>
+                <a
+                  className="block opacity-80 hover:opacity-100 py-0.5"
+                  href="/#"
+                >
+                  All Knives
+                </a>
+                <a
+                  className="block opacity-80 hover:opacity-100 py-0.5"
+                  href="/#"
+                >
+                  All Souvenir
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-black-500">
+        <div className="flex flex-col items-center p-2 text-slate-50 text-xs text-center m-auto">
+          <div className="flex flex-col justify-center items-center text-center text-[9px]">
+            <div>
+              This site is not affiliated with Valve, Steam, or any of their
+              partners.
+            </div>
+            <div className="mt-1">
+              Copyright © 2024 - {new Date().getFullYear()} CS2Data.info.
+              Powered by Steam.
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }

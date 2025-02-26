@@ -1,117 +1,125 @@
 import CardSkins from "@/components/Card/CardSkins";
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/Header/Header";
-import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { patchesArray } from "./patchesArray";
 
-interface Patch {
+const formatNameForId = (name: string) =>
+  name
+    .toLowerCase()
+    .trim()
+    .normalize("NFD")
+    .replace(/\|/g, "")
+    .replace(/\★/g, "")
+    .replace(/:/g, "")
+    .replace(/CS:GO/gi, "csgo")
+    .replace(/&/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-+/g, "")
+    .replace(/-+$/g, "");
+
+interface Skin {
+  id: string;
+  name: string;
+  rarity: {
     id: string;
     name: string;
-    description: string;
-    rarity: {
-        id: string;
-        name: string;
-        color: string;
-    };
-    market_hash_name: string;
-    crates: Array<{
-        id: string;
-        name: string;
-        image: string;
-    }>;
-    image: string;
+    color: string;
+  };
+  paint_index: string | null;
+  phase?: string | null;
+  image: string;
 }
 
-const rarityOrder = ["Exotic", "Remarkable", "High Grade"];
+interface Crate {
+  id: string;
+  name: string;
+  description: string | null;
+  type: string;
+  first_sale_date: string;
+  contains: Skin[];
+  contains_rare: Skin[];
+  image: string;
+}
 
-export default async function Collection({
-    params,
-}: {
-    params: { id: string };
-}) {
-    const selectedPatch = patchesArray.find(
-        (patch) => patch.link === params.id,
+export default async function Cases({ params }: { params: { id: string } }) {
+  const crateId = formatNameForId(params.id);
+
+  let crate: Crate | null = null;
+
+  try {
+    const responseEn = await fetch(
+      "https://api.cs2data.info/en/crates/capsules/patches.json",
+      {
+        cache: "no-store",
+      },
+    );
+    const casesEn = await responseEn.json();
+    const filteredCasesEn = casesEn.filter(
+      (item: Crate) => item.type === "Patch Capsule",
     );
 
-    if (!selectedPatch) {
-        notFound();
+    crate =
+      filteredCasesEn.find(
+        (item: Crate) => formatNameForId(item.name) === crateId,
+      ) || null;
+
+    if (!crate) {
+      notFound();
     }
+  } catch (error) {
+    console.error("Erro ao buscar os dados da API:", error);
+    notFound();
+  }
 
-    try {
-        const response = await axios.get(
-            "https://api.cs2data.info/en/patches.json",
-        );
-        const patches: Patch[] = response.data;
+  return (
+    <>
+      <div className="bg-zinc-900">
+        <div className="crate-container">
+          <div className="crate-image-wrapper">
+            <span></span>
+            {crate && (
+              <Image
+                width={250}
+                height={250}
+                src={crate.image}
+                alt={crate.name}
+                className="crate-image"
+                priority
+              />
+            )}
+          </div>
+          <span className="crate-info">
+            <span className="crate-name">{crate?.name}</span>
+          </span>
+        </div>
 
-        const filteredPatches = patches.filter((patch) =>
-            patch.crates.some((crate) => crate.id === selectedPatch.id),
-        );
-
-        if (filteredPatches.length === 0) {
-            notFound();
-        }
-
-        const sortedPatches = filteredPatches.sort((a, b) => {
-            const rarityAIndex = rarityOrder.indexOf(a.rarity.name);
-            const rarityBIndex = rarityOrder.indexOf(b.rarity.name);
-            return (
-                (rarityAIndex >= 0 ? rarityAIndex : Infinity) -
-                (rarityBIndex >= 0 ? rarityBIndex : Infinity)
-            );
-        });
-
-        console.log("Sorted Patches:", sortedPatches);
-
-        return (
-            <>
-                <div className="bg-zinc-900">
-                    <Header />
-                    <div className="crate-container">
-                        {sortedPatches.length > 0 && (
-                            <div className="crate-image-wrapper flex justify-center items-center gap-4">
-                                <Image
-                                    width={100}
-                                    height={100}
-                                    src={sortedPatches[0].crates[0]?.image}
-                                    alt={sortedPatches[0].crates[0]?.name}
-                                    className="w-auto h-auto"
-                                    priority
-                                />
-                                <span className="crate-info">
-                                    <span className="crate-name">
-                                        {sortedPatches[0].crates[0]?.name}
-                                    </span>
-                                </span>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="flex justify-center items-center my-4">
-                        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 justify-center items-center">
-                            {sortedPatches.map((patch) => (
-                                <CardSkins
-                                    key={patch.id}
-                                    skinName={patch.name}
-                                    imageUrl={patch.image}
-                                    rarity={patch.rarity}
-                                    specialOption={"Default"}
-                                    priceWithoutStatTrak="No data"
-                                    priceWithStatTrak=""
-                                    collectionName={patch.crates[0]?.name}
-                                    collectionImageUrl={patch.crates[0]?.image}
-                                    basePath="/others/patches"
-                                />
-                            ))}
-                        </div>
-                    </div>
-                    <Footer />
-                </div>
-            </>
-        );
-    } catch (error) {
-        console.error("Error fetching patches:", error);
-        notFound();
-    }
+        <div className="flex justify-center items-center my-4">
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center items-center">
+            {crate?.contains && crate.contains.length > 0 ? (
+              crate.contains
+                .slice()
+                .reverse()
+                .map((item: Skin) => (
+                  <CardSkins
+                    key={item.id}
+                    skinName={item.name}
+                    imageUrl={item.image}
+                    rarity={item.rarity}
+                    specialOption="Default"
+                    priceWithoutStatTrak="No data"
+                    priceWithStatTrak="No Data"
+                    collectionName={crate.name || ""}
+                    collectionImageUrl={crate.image || ""}
+                    basePath="/others/patches/"
+                  />
+                ))
+            ) : (
+              <div className="text-white">No items found in the crate.</div>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
