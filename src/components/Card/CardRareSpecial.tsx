@@ -1,4 +1,3 @@
-import axios from "axios";
 import Image from "next/image";
 import crateIdData from "../../../public/crateId.json";
 import { cookies } from "next/headers";
@@ -67,10 +66,11 @@ export default async function CardRareSpecial({
   const language = cookieStore.get("language")?.value || "en";
 
   try {
-    const response = await axios.get(
-      `https://api.cs2data.info/${language}/crates.json`,
+    const response = await fetch(
+      `https://api.cs2data.info/${language}/crates.json`
     );
-    crate = response.data.find((item: Crate) => item.id === idToUse) || null;
+    const cratesData = await response.json();
+    crate = cratesData.find((item: Crate) => item.id === idToUse) || null;
   } catch (error) {
     console.error("Error fetching crate data:", error);
   }
@@ -84,11 +84,12 @@ export default async function CardRareSpecial({
   }
 
   try {
-    const collectionResponse = await axios.get(
-      `https://api.cs2data.info/${language}/collections.json`,
+    const collectionResponse = await fetch(
+      `https://api.cs2data.info/${language}/collections.json`
     );
-    const collection = collectionResponse.data.find((col: Collection) =>
-      col.crates.some((c) => c.name === crate.name),
+    const collectionsData = await collectionResponse.json();
+    const collection = collectionsData.find((col: Collection) =>
+      col.crates.some((c) => c.name === crate.name)
     );
 
     if (collection) {
@@ -113,10 +114,10 @@ export default async function CardRareSpecial({
   const skinsToShow = getRandomSkins(uniqueSkins, 4);
 
   const hasKnives = uniqueSkins.some(
-    (item) => item.rarity.id === "rarity_ancient_weapon",
+    (item) => item.rarity.id === "rarity_ancient_weapon"
   );
   const hasGloves = uniqueSkins.some(
-    (item) => item.rarity.id === "rarity_ancient",
+    (item) => item.rarity.id === "rarity_ancient"
   );
 
   const itemType = skin ? "" : hasGloves ? "Gloves" : hasKnives ? "Knives" : "";

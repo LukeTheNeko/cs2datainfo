@@ -1,7 +1,6 @@
 "use client";
 
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 interface Rarity {
@@ -46,25 +45,27 @@ export default function Tournament() {
 
   const fetchStickersAndCrates = async () => {
     try {
-      const musickitsResponse = await axios.get(
-        "https://api.cs2data.info/en/music_kits.json",
-      );
-      console.log("Stickers:", musickitsResponse.data);
+      const musickitsResponse = await fetch("https://api.cs2data.info/en/music_kits.json");
+      if (!musickitsResponse.ok) {
+        throw new Error("Erro ao buscar music kits");
+      }
+      const musickitsData = await musickitsResponse.json();
+      console.log("Stickers:", musickitsData);
 
-      const filteredStickers: musickit[] = musickitsResponse.data.filter(
+      const filteredStickers: musickit[] = musickitsData.filter(
         (musickit: musickit) => !musickit.name.startsWith("StatTrak™"),
       );
 
-      const crateResponse = await axios.get(
-        "https://api.cs2data.info/en/crates/music_kit_boxes.json",
-      );
-      console.log("Crates:", crateResponse.data);
-
-      const cratesData: Crate[] = crateResponse.data;
+      const crateResponse = await fetch("https://api.cs2data.info/en/crates/music_kit_boxes.json");
+      if (!crateResponse.ok) {
+        throw new Error("Erro ao buscar crates");
+      }
+      const cratesData: Crate[] = await crateResponse.json(); // Tipagem adicionada aqui
+      console.log("Crates:", cratesData);
 
       const stickersWithCrates = filteredStickers.map((musickit) => {
-        const associatedCrates = cratesData.filter((crate) =>
-          crate.contains.some((kit) => kit.id === musickit.id),
+        const associatedCrates = cratesData.filter((crate: Crate) =>
+          crate.contains.some((kit: MusicKit) => kit.id === musickit.id), // Tipagem do parâmetro `kit` como MusicKit
         );
 
         const firstCrate = associatedCrates[0] || null;

@@ -1,7 +1,6 @@
 "use client";
 
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -48,23 +47,22 @@ export default function StickersPage() {
 
   const fetchStickers = async () => {
     try {
-      const response = await axios.get(
-        "https://api.cs2data.info/en/stickers.json",
-      );
+      const response = await fetch("https://api.cs2data.info/en/stickers.json");
+      const data = await response.json();
 
-      const filteredStickers: Sticker[] = response.data.filter(
+      const filteredStickers: Sticker[] = data.filter(
         (sticker: Sticker) => {
           const tournament = stickersData.find(
-            (tournament) => tournament.id === id,
+            (tournament) => tournament.id === id
           );
           return (
             sticker.market_hash_name !== null &&
             tournament &&
             sticker.crates.some(
-              (crate) => crate.name === tournament.capsule_name,
+              (crate) => crate.name === tournament.capsule_name
             )
           );
-        },
+        }
       );
 
       setStickers(filteredStickers);

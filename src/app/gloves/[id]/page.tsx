@@ -1,5 +1,4 @@
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import { notFound } from "next/navigation";
 import { glovesArray } from "./glovesArray";
 import Image from "next/image";
@@ -41,9 +40,8 @@ export default async function Gloves({ params }: { params: { id: string } }) {
   }
 
   try {
-    const { data } = await axios.get<Skin[]>(
-      "https://api.cs2data.info/en/skins.json",
-    );
+    const response = await fetch("https://api.cs2data.info/en/skins.json");
+    const data: Skin[] = await response.json();
 
     const filteredSkins = data.filter((item) => item.weapon.id === weaponId);
 

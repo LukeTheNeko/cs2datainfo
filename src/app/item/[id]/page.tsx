@@ -1,6 +1,5 @@
 import CollectionCase from "@/components/Items/CollectionCase";
 import Summary from "@/components/Items/Summary";
-import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Skin } from "@/components/Items/skin";
@@ -26,10 +25,12 @@ export default async function Item({ params }: { params: { id: string } }) {
 
   async function fetchSkinData(): Promise<Skin[] | null> {
     try {
-      const response = await axios.get(
-        "https://api.cs2data.info/en/skins.json",
-      );
-      return response.data || null;
+      const response = await fetch("https://api.cs2data.info/en/skins.json");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data || null;
     } catch {
       return null;
     }
@@ -136,150 +137,6 @@ export default async function Item({ params }: { params: { id: string } }) {
                 );
               })}
             </div>
-
-            {/* {(skin.stattrak || skin.souvenir) && (
-                            <div className="flex flex-col p-2 rounded-md bg-black-300">
-                                {skin.stattrak && (
-                                    <>
-                                        <Link
-                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
-                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
-                                            target="_blank"
-                                        >
-                                            <span>
-                                                <span className="text-orange-400 font-medium">
-                                                    StatTrak
-                                                </span>{" "}
-                                                Factory New
-                                            </span>
-                                            <span>$ TO DO MAKE PRICES</span>
-                                        </Link>
-                                        <Link
-                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
-                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
-                                            target="_blank"
-                                        >
-                                            <span>
-                                                <span className="text-orange-400 font-medium">
-                                                    StatTrak
-                                                </span>{" "}
-                                                Minimal Wear
-                                            </span>
-                                            <span>$ TO DO MAKE PRICES</span>
-                                        </Link>
-                                        <Link
-                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
-                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
-                                            target="_blank"
-                                        >
-                                            <span>
-                                                <span className="text-orange-400 font-medium">
-                                                    StatTrak
-                                                </span>{" "}
-                                                Field-Tested
-                                            </span>
-                                            <span>$ TO DO MAKE PRICES</span>
-                                        </Link>
-                                        <Link
-                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
-                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
-                                            target="_blank"
-                                        >
-                                            <span>
-                                                <span className="text-orange-400 font-medium">
-                                                    StatTrak
-                                                </span>{" "}
-                                                Well-Worn
-                                            </span>
-                                            <span>$ TO DO MAKE PRICES</span>
-                                        </Link>
-                                        <Link
-                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
-                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
-                                            target="_blank"
-                                        >
-                                            <span>
-                                                <span className="text-orange-400 font-medium">
-                                                    StatTrak
-                                                </span>{" "}
-                                                Battle-Scarred
-                                            </span>
-                                            <span>$ TO DO MAKE PRICES</span>
-                                        </Link>
-                                    </>
-                                )}
-
-                                {skin.souvenir && (
-                                    <>
-                                        <Link
-                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
-                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
-                                            target="_blank"
-                                        >
-                                            <span>
-                                                <span className="text-yellow-400 font-medium">
-                                                    Souvenir
-                                                </span>{" "}
-                                                Factory New
-                                            </span>
-                                            <span>$ TO DO MAKE PRICES</span>
-                                        </Link>
-                                        <Link
-                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
-                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
-                                            target="_blank"
-                                        >
-                                            <span>
-                                                <span className="text-yellow-400 font-medium">
-                                                    Souvenir
-                                                </span>{" "}
-                                                Minimal Wear
-                                            </span>
-                                            <span>$ TO DO MAKE PRICES</span>
-                                        </Link>
-                                        <Link
-                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
-                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
-                                            target="_blank"
-                                        >
-                                            <span>
-                                                <span className="text-yellow-400 font-medium">
-                                                    Souvenir
-                                                </span>{" "}
-                                                Field-Tested
-                                            </span>
-                                            <span>$ TO DO MAKE PRICES</span>
-                                        </Link>
-                                        <Link
-                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
-                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
-                                            target="_blank"
-                                        >
-                                            <span>
-                                                <span className="text-yellow-400 font-medium">
-                                                    Souvenir
-                                                </span>{" "}
-                                                Well-Worn
-                                            </span>
-                                            <span>$ TO DO MAKE PRICES</span>
-                                        </Link>
-                                        <Link
-                                            className="flex justify-between hover:bg-black-400 px-2 py-0.5 rounded-md"
-                                            href={`https://steamcommunity.com/market/listings/730/${skin.name} (Battle-Scarred)`}
-                                            target="_blank"
-                                        >
-                                            <span>
-                                                <span className="text-yellow-400 font-medium">
-                                                    Souvenir
-                                                </span>{" "}
-                                                Battle-Scarred
-                                            </span>
-                                            <span>$ TO DO MAKE PRICES</span>
-                                        </Link>
-                                    </>
-                                )}
-                            </div>
-                        )} */}
 
             {(skin.stattrak || skin.souvenir) && (
               <div className="flex flex-col p-2 rounded-md bg-black-300">

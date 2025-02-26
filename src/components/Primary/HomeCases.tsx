@@ -1,4 +1,3 @@
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import crateIdData from "../../../public/crateId.json";
@@ -47,12 +46,15 @@ const formatNameForId = (name: string) =>
 
 export default async function HomeCases() {
   let crate: Crate | null = null;
-
   const crateId = crateIdData.id;
 
   try {
-    const response = await axios.get("https://api.cs2data.info/en/crates.json");
-    crate = response.data.find((item: Crate) => item.id === crateId) || null;
+    const response = await fetch("https://api.cs2data.info/en/crates.json");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    crate = data.find((item: Crate) => item.id === crateId) || null;
   } catch (error) {
     console.error("Error fetching crate data:", error);
   }

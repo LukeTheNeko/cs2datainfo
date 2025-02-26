@@ -1,7 +1,6 @@
 "use client";
 
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 interface Rarity {
@@ -44,17 +43,18 @@ export default function Tournament() {
 
   const fetchStickers = async () => {
     try {
-      const response = await axios.get(
-        "https://api.cs2data.info/en/stickers.json",
-      );
-      const filteredStickers: Sticker[] = response.data.filter(
+      const response = await fetch("https://api.cs2data.info/en/stickers.json");
+      if (!response.ok) {
+        throw new Error("Erro ao buscar os stickers: " + response.statusText);
+      }
+      const data = await response.json();
+      const filteredStickers: Sticker[] = data.filter(
         (sticker: Sticker) =>
-          sticker.market_hash_name !== null && sticker.type !== "Other",
+          sticker.market_hash_name !== null && sticker.type !== "Other"
       );
-
       setStickers(filteredStickers);
     } catch (error) {
-      console.error("Erro ao buscar os stickers:", error);
+      console.error(error);
     }
   };
 
@@ -74,7 +74,7 @@ export default function Tournament() {
   const totalPages = Math.ceil(orderedStickers.length / stickersPerPage);
   const currentStickers = orderedStickers.slice(
     (currentPage - 1) * stickersPerPage,
-    currentPage * stickersPerPage,
+    currentPage * stickersPerPage
   );
 
   return (

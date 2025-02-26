@@ -1,9 +1,6 @@
 "use client";
 
 import CardSkins from "@/components/Card/CardSkins";
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/Header/Header";
-import axios from "axios";
 import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -23,7 +20,7 @@ interface Sticker {
     crates: {
         name: string;
         image: string;
-    }[];
+    }[]; 
     type: string;
     market_hash_name: string | null;
     effect: string;
@@ -52,11 +49,14 @@ export default function StickersPage() {
 
     const fetchStickers = async () => {
         try {
-            const response = await axios.get(
-                "https://api.cs2data.info/en/stickers.json",
-            );
+            const response = await fetch("https://api.cs2data.info/en/stickers.json");
 
-            const filteredStickers: Sticker[] = response.data.filter(
+            if (!response.ok) {
+                throw new Error("Erro ao buscar os stickers");
+            }
+
+            const data = await response.json();
+            const filteredStickers: Sticker[] = data.filter(
                 (sticker: Sticker) => {
                     return (
                         sticker.market_hash_name !== null &&
@@ -91,7 +91,6 @@ export default function StickersPage() {
     return (
         <>
             <div className="bg-zinc-900">
-                <Header />
                 <div className="crate-container">
                     {orderedStickers.length > 0 && (
                         <>
@@ -104,13 +103,13 @@ export default function StickersPage() {
                                     <Image
                                         width={100}
                                         height={100}
-                                        src={
+                                        src={ 
                                             orderedStickers[0]?.crates?.[0]
                                                 ?.image ||
                                             collection?.collectionImage ||
                                             ""
                                         }
-                                        alt={
+                                        alt={ 
                                             orderedStickers[0]?.crates?.[0]
                                                 ?.name ||
                                             collection?.collectionName ||
@@ -144,11 +143,11 @@ export default function StickersPage() {
                                     specialOption="Default"
                                     priceWithoutStatTrak="no data"
                                     priceWithStatTrak="no data"
-                                    collectionName={
+                                    collectionName={ 
                                         sticker?.crates?.[0]?.name ||
                                         collection?.collectionName
                                     }
-                                    collectionImageUrl={
+                                    collectionImageUrl={ 
                                         sticker?.crates?.[0]?.image ||
                                         collection?.collectionImage ||
                                         ""
@@ -161,8 +160,6 @@ export default function StickersPage() {
                         )}
                     </div>
                 </div>
-
-                <Footer />
             </div>
         </>
     );

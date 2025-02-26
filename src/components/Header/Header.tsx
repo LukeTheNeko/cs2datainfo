@@ -251,9 +251,9 @@ export default function Header() {
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black-500 bg-opacity-50">
           <div className="bg-black-400 p-6 text-white rounded-lg shadow-lg w-[90%] max-w-md">
             <div className="px-2">
-              <h2 className="text-3xl font-bold px-2 py-2">Settings</h2>
+              <h2 className="text-2xl font-bold px-2 py-8">Settings</h2>
 
-             {/*  <div className="px-2 py-2">
+              {/*  <div className="px-2 py-2">
                 <span className="font-medium block mb-1">Language</span>
                 <LanguageMenu
                   selectedLanguage={selectedLanguage}

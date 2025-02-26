@@ -1,25 +1,12 @@
 "use client";
 
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 interface Rarity {
   id: string;
   name: string;
   color: string;
-}
-
-interface pass {
-  id: string;
-  name: string;
-}
-
-interface Crate {
-  id: string;
-  name: string;
-  image: string;
-  contains: pass[];
 }
 
 interface pass {
@@ -37,6 +24,13 @@ interface pass {
   collectionImageUrl: string;
 }
 
+interface Crate {
+  id: string;
+  name: string;
+  image: string;
+  contains: pass[];
+}
+
 const rarityOrder = ["Extraordinary", "Exotic", "Remarkable", "High Grade"];
 
 export default function Tournament() {
@@ -44,31 +38,33 @@ export default function Tournament() {
 
   const fetchStickersAndCrates = async () => {
     try {
-      const musickitsResponse = await axios.get(
-        "https://api.cs2data.info/en/collectibles.json",
+      const musickitsResponse = await fetch(
+        "https://api.cs2data.info/en/collectibles.json"
       );
-      console.log("Stickers:", musickitsResponse.data);
+      const musickitsData = await musickitsResponse.json();
+      console.log("Stickers:", musickitsData);
 
-      const filteredStickers: pass[] = musickitsResponse.data.filter(
+      const filteredStickers: pass[] = musickitsData.filter(
         (pass: pass) =>
           !pass.name.startsWith("StatTrak™") &&
           pass.market_hash_name !== null &&
           !pass.name.includes("Souvenir Package") &&
           pass.type !== "Pin" &&
           (pass.name.includes("3 Souvenir Tokens") ||
-            !pass.name.includes("Souvenir Token")),
+            !pass.name.includes("Souvenir Token"))
       );
 
-      const crateResponse = await axios.get(
-        "https://api.cs2data.info/en/crates/capsules/pins.json",
+      const crateResponse = await fetch(
+        "https://api.cs2data.info/en/crates/capsules/pins.json"
       );
-      console.log("Crates:", crateResponse.data);
+      const crateData = await crateResponse.json();
+      console.log("Crates:", crateData);
 
-      const cratesData: Crate[] = crateResponse.data;
+      const cratesData: Crate[] = crateData;
 
       const stickersWithCrates = filteredStickers.map((pass) => {
         const associatedCrates = cratesData.filter((crate) =>
-          crate.contains.some((kit) => kit.id === pass.id),
+          crate.contains.some((kit) => kit.id === pass.id)
         );
 
         const firstCrate = associatedCrates[0] || null;

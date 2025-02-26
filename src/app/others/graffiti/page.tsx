@@ -1,5 +1,4 @@
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import { cookies } from "next/headers";
 import Link from "next/link";
 
@@ -30,7 +29,6 @@ interface Graffiti {
 
 const rarityOrder = [
   "#b0c3d9", // Base Grade
-
   "#eb4b4b", // Master
   "#d32ce6", // Superior
   "#8847ff", // Exceptional
@@ -47,12 +45,14 @@ export default async function GraffitiPage({
 
   const fetchgraffiti = async () => {
     try {
-      const response = await axios.get(
+      const response = await fetch(
         `https://api.cs2data.info/${language}/graffiti.json`,
       );
-      return response.data.filter(
-        (graffiti: Graffiti) => graffiti.market_hash_name !== null,
-      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch graffiti data");
+      }
+      const data: Graffiti[] = await response.json();
+      return data.filter((graffiti) => graffiti.market_hash_name !== null);
     } catch (error) {
       console.error("Erro ao buscar os graffiti:", error);
       return [];
@@ -178,11 +178,7 @@ export default async function GraffitiPage({
                 <Link
                   key={totalPages - 8 + index}
                   href={`?page=${totalPages - 8 + index}`}
-                  className={`items-center px-4 py-2 -ml-px text-sm font-medium text-white bg-black-300 border border-black-400 cursor-pointer leading-5 hover:bg-indigo-950 ${
-                    currentPage === totalPages - 8 + index
-                      ? "bg-indigo-950"
-                      : ""
-                  }`}
+                  className={`items-center px-4 py-2 -ml-px text-sm font-medium text-white bg-black-300 border border-black-400 cursor-pointer leading-5 hover:bg-indigo-950`}
                 >
                   {totalPages - 8 + index}
                 </Link>
@@ -209,11 +205,7 @@ export default async function GraffitiPage({
                 <Link
                   key={currentPage - 3 + index}
                   href={`?page=${currentPage - 3 + index}`}
-                  className={`items-center px-4 py-2 -ml-px text-sm font-medium text-white bg-black-300 border border-black-400 cursor-pointer leading-5 hover:bg-indigo-950 ${
-                    currentPage === currentPage - 3 + index
-                      ? "bg-indigo-700"
-                      : ""
-                  }`}
+                  className={`items-center px-4 py-2 -ml-px text-sm font-medium text-white bg-black-300 border border-black-400 cursor-pointer leading-5 hover:bg-indigo-950`}
                 >
                   {currentPage - 3 + index}
                 </Link>

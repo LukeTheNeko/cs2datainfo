@@ -1,5 +1,4 @@
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { weaponsArray } from "./weaponsData";
@@ -36,7 +35,7 @@ const rarityOrder = [
 ];
 
 const weaponIdMap = Object.fromEntries(
-  weaponsArray.map((weapon) => [weapon.name.toLowerCase(), weapon.id]),
+  weaponsArray.map((weapon) => [weapon.name.toLowerCase(), weapon.id])
 );
 
 const getCollectionOrCrate = (item: Skin) => {
@@ -60,19 +59,18 @@ export default async function Weapons({ params }: { params: { id: string } }) {
   }
 
   try {
-    const { data } = await axios.get<Skin[]>(
-      "https://api.cs2data.info/en/skins.json",
-    );
+    const response = await fetch("https://api.cs2data.info/en/skins.json");
+    const data: Skin[] = await response.json();
 
     const uniqueSkins = Array.from(
       new Map(
         data
           .filter((item) => weaponId === item.weapon.id)
-          .map((item) => [item.name, item]),
-      ).values(),
+          .map((item) => [item.name, item])
+      ).values()
     ).sort(
       (a, b) =>
-        rarityOrder.indexOf(a.rarity.name) - rarityOrder.indexOf(b.rarity.name),
+        rarityOrder.indexOf(a.rarity.name) - rarityOrder.indexOf(b.rarity.name)
     );
 
     const weaponName =
@@ -89,23 +87,9 @@ export default async function Weapons({ params }: { params: { id: string } }) {
 
     return (
       <>
-        {/* metatags */}
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
-        <meta name="title" content={metadata.title} />
-        <link rel="mask-icon" href="/mask-icon.svg" color="#4f46e5" />
-        <meta name="theme-color" content="#4f46e5" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://cs2data.info/" />
-        <meta property="og:title" content={metadata.title} />
-        <meta property="og:description" content={metadata.description} />
         <meta property="og:image" content={metadata.ogImageUrl} />
-        <meta property="twitter:url" content="https://cs2data.info/" />
-        <meta property="twitter:title" content={metadata.title} />
-        <meta property="twitter:description" content={metadata.description} />
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:image" content={metadata.ogImageUrl} />
-        {/* metatags */}
 
         <div className="bg-zinc-900">
           <div className="flex flex-col md:flex-row justify-center items-center my-16 text-white font-medium mx-20">
@@ -114,7 +98,7 @@ export default async function Weapons({ params }: { params: { id: string } }) {
                 <Image
                   width={100}
                   height={100}
-                  src={`https://img.cs2data.info/static/panorama/images/econ/weapons/base_weapons/${uniqueSkins[0].weapon.id}_png.png`}
+                  src={imageUrl}
                   alt={uniqueSkins[0].weapon.name}
                   className="w-full h-auto"
                   priority
@@ -127,7 +111,7 @@ export default async function Weapons({ params }: { params: { id: string } }) {
           </div>
 
           <div className="flex justify-center items-center my-10">
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 justify-center items-center">
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
               {uniqueSkins.length > 0 ? (
                 uniqueSkins.map((item) => {
                   const {

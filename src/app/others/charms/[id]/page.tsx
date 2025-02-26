@@ -1,5 +1,4 @@
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { charmsData } from "./charmsArray";
@@ -20,10 +19,12 @@ interface Capsula {
 }
 
 async function fetchCharms(): Promise<Capsula[]> {
-  const response = await axios.get<Capsula[]>(
-    "https://api.cs2data.info/en/keychains.json",
-  );
-  return response.data;
+  const response = await fetch("https://api.cs2data.info/en/keychains.json");
+  if (!response.ok) {
+    throw new Error("Erro ao buscar dados");
+  }
+  const data = await response.json();
+  return data;
 }
 
 export default async function CharmsPage({

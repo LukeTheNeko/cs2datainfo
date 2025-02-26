@@ -3,7 +3,6 @@
 import CardSkins from "@/components/Card/CardSkins";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { stickersData } from "./stickersData";
 import { notFound, useParams } from "next/navigation";
@@ -50,23 +49,22 @@ export default function StickersPage() {
 
     const fetchStickers = async () => {
         try {
-            const response = await axios.get(
-                "https://api.cs2data.info/en/stickers.json",
-            );
+            const response = await fetch("https://api.cs2data.info/en/stickers.json");
+            const data = await response.json();
 
-            const filteredStickers: Sticker[] = response.data.filter(
+            const filteredStickers: Sticker[] = data.filter(
                 (sticker: Sticker) => {
                     const tournament = stickersData.find(
-                        (tournament) => tournament.id === id,
+                        (tournament) => tournament.id === id
                     );
                     return (
                         sticker.market_hash_name !== null &&
                         tournament &&
                         sticker.crates.some(
-                            (crate) => crate.name === tournament.capsule_name,
+                            (crate) => crate.name === tournament.capsule_name
                         )
                     );
-                },
+                }
             );
 
             setStickers(filteredStickers);
@@ -103,14 +101,8 @@ export default function StickersPage() {
                                             <Image
                                                 width={100}
                                                 height={100}
-                                                src={
-                                                    orderedStickers[0].crates[0]
-                                                        .image
-                                                }
-                                                alt={
-                                                    orderedStickers[0].crates[0]
-                                                        .name
-                                                }
+                                                src={orderedStickers[0].crates[0].image}
+                                                alt={orderedStickers[0].crates[0].name}
                                                 className="crate-image"
                                                 priority
                                             />
@@ -120,8 +112,7 @@ export default function StickersPage() {
                                     </div>
                                     <span className="crate-info">
                                         <span className="crate-name">
-                                            {orderedStickers[0].crates[0]
-                                                .name || ""}
+                                            {orderedStickers[0].crates[0].name || ""}
                                         </span>
                                     </span>
                                 </div>
@@ -141,12 +132,8 @@ export default function StickersPage() {
                                     specialOption="Default"
                                     priceWithoutStatTrak="no data"
                                     priceWithStatTrak=""
-                                    collectionName={
-                                        sticker?.crates?.[0]?.name || ""
-                                    }
-                                    collectionImageUrl={
-                                        sticker?.crates?.[0]?.image || ""
-                                    }
+                                    collectionName={sticker?.crates?.[0]?.name || ""}
+                                    collectionImageUrl={sticker?.crates?.[0]?.image || ""}
                                     basePath="/stickers/tournament/capsules/"
                                 />
                             ))

@@ -1,5 +1,4 @@
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -41,12 +40,16 @@ export default async function Cases({ params }: { params: { id: string } }) {
   let crate: Crate | null = null;
 
   try {
-    const response = await axios.get(
-      "https://api.cs2data.info/en/crates/music_kit_boxes.json",
+    const response = await fetch(
+      "https://api.cs2data.info/en/crates/music_kit_boxes.json"
     );
-    const cases = response.data.filter(
-      (item: Crate) => item.type === "Music Kit Box",
-    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const data = await response.json();
+    const cases = data.filter((item: Crate) => item.type === "Music Kit Box");
 
     crate =
       cases.find((item: Crate) => {

@@ -1,6 +1,5 @@
 import CardRareSpecial from "@/components/Card/CardRareSpecial";
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -42,11 +41,12 @@ export default async function Cases({ params }: { params: { id: string } }) {
   let crate: Crate | null = null;
 
   try {
-    const response = await axios.get("https://api.cs2data.info/en/crates.json");
-    const cases = response.data.filter((item: Crate) => item.type === "Case");
+    const response = await fetch("https://api.cs2data.info/en/crates.json");
+    const cases: Crate[] = await response.json();
+    const filteredCases = cases.filter((item) => item.type === "Case");
 
     crate =
-      cases.find((item: Crate) => {
+      filteredCases.find((item) => {
         const formattedItemName = formatNameForId(item.name);
         return formattedItemName === crateId;
       }) || null;

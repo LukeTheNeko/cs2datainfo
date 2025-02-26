@@ -1,5 +1,4 @@
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -50,12 +49,10 @@ export default async function Collection({
   let skinsData: Skin[] = [];
 
   try {
-    const collectionsResponse = await axios.get(
-      "https://api.cs2data.info/en/collections.json",
+    const collectionsResponse = await fetch(
+      "https://api.cs2data.info/en/collections.json"
     );
-    const collections = collectionsResponse.data.filter(
-      (item: CollectionSet) => item.id,
-    );
+    const collections = await collectionsResponse.json();
 
     collectionSet =
       collections.find((item: CollectionSet) => {
@@ -63,10 +60,8 @@ export default async function Collection({
         return formattedItemName === crateId;
       }) || null;
 
-    const skinsResponse = await axios.get<Skin[]>(
-      "https://api.cs2data.info/en/skins.json",
-    );
-    skinsData = skinsResponse.data;
+    const skinsResponse = await fetch("https://api.cs2data.info/en/skins.json");
+    skinsData = await skinsResponse.json();
   } catch {
     notFound();
   }
@@ -102,7 +97,7 @@ export default async function Collection({
                 .reverse()
                 .map((item: Skin) => {
                   const skinData = skinsData.find(
-                    (skin) => skin.name === item.name,
+                    (skin) => skin.name === item.name
                   );
 
                   const stattrak = skinData?.stattrak || false;

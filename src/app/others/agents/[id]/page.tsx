@@ -1,5 +1,4 @@
 import CardSkins from "@/components/Card/CardSkins";
-import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { agentsArray } from "./agentsArray";
@@ -41,8 +40,12 @@ export default async function Collection({
   }
 
   try {
-    const response = await axios.get("https://api.cs2data.info/en/agents.json");
-    const agents: Agent[] = response.data;
+    // Usando fetch no lugar de axios
+    const response = await fetch("https://api.cs2data.info/en/agents.json");
+    if (!response.ok) {
+      throw new Error("Erro ao buscar os agentes");
+    }
+    const agents: Agent[] = await response.json();
 
     const filteredAgents = agents.filter((agent) =>
       agent.collections.some(
@@ -60,7 +63,7 @@ export default async function Collection({
       const rarityAIndex = rarityOrder.indexOf(a.rarity.name);
       const rarityBIndex = rarityOrder.indexOf(b.rarity.name);
       return (
-        (rarityAIndex >= 0 ? rarityAIndex : Infinity) -
+        (rarityAIndex >= 0 ? rarityAIndex : Infinity) - 
         (rarityBIndex >= 0 ? rarityBIndex : Infinity)
       );
     });
